@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Todo Android Native</string>
+    <string name="main_activity">Main Activity Label</string>
+</resources>
