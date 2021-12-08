@@ -11,17 +11,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.nhvn.todoandroidnative.models.TodoModel
 
 @Composable
-fun TodoCard(title: String, description: String = "", onClick: () -> Unit) {
-    Card(modifier = Modifier
-        .clickable {
-            onClick()
-        }
-        .fillMaxWidth()) {
+fun TodoCard(
+    todo: TodoModel,
+    modifier: Modifier = Modifier,
+) {
+    Card(modifier = modifier) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = title)
-            Text(text = description)
+            Text(text = todo.title)
+            Text(text = todo.description)
         }
     }
 }
@@ -29,5 +29,5 @@ fun TodoCard(title: String, description: String = "", onClick: () -> Unit) {
 @Composable
 @Preview
 fun PreviewTodoCard() {
-    TodoCard(title = "Go to the gym", description = "2021", onClick = {})
+    TodoCard(todo = TodoModel("id1", "Todo title 1", "Todo description"))
 }

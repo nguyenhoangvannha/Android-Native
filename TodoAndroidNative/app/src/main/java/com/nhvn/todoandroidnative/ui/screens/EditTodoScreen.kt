@@ -1,6 +1,5 @@
 package com.nhvn.todoandroidnative.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -38,7 +37,7 @@ fun EditTodoScreen(navController: NavHostController) {
                 content = {
                     EditTodo(
                         onSave = {
-                            Log.i("On Save message", it)
+                            navController.popBackStack()
                         },
                         onCancel = {
                             navController.popBackStack()

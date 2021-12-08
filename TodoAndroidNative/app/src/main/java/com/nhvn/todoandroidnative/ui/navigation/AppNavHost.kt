@@ -11,14 +11,13 @@ import com.nhvn.todoandroidnative.ui.screens.HomeScreen
 fun AppNavHost(
     navController: NavHostController,
     startDestination: String = Routes.homeScreen,
-    todos: List<String>
 ) {
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
         composable(Routes.homeScreen) {
-            HomeScreen(todos, navController)
+            HomeScreen(navController)
         }
         composable(Routes.editTodoScreen) {
             EditTodoScreen(navController)
