@@ -10,12 +10,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.nhvn.todoandroidnative.models.TodoModel
 import com.nhvn.todoandroidnative.ui.theme.TodoAndroidNativeTheme
+import com.nhvn.todoandroidnative.ui.viewmodel.TodoViewModel
 import com.nhvn.todoandroidnative.ui.widgets.EditTodo
 
 @Composable
-fun EditTodoScreen(navController: NavHostController) {
+fun EditTodoScreen(navController: NavHostController, viewModel: TodoViewModel = viewModel()) {
     TodoAndroidNativeTheme {
         // A surface container using the 'background' color from the theme
         Surface(color = MaterialTheme.colors.background) {
@@ -37,6 +40,7 @@ fun EditTodoScreen(navController: NavHostController) {
                 content = {
                     EditTodo(
                         onSave = {
+                            viewModel.addTodo(TodoModel(title = it))
                             navController.popBackStack()
                         },
                         onCancel = {

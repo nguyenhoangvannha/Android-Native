@@ -18,7 +18,7 @@ class MyAppState(
     private val resources: Resources,
 ) {
     val shouldShowAddTodoFloatingActionButton: Boolean
-        get() = true;
+        get() = false;
 
     // Navigation logic, which is a type of UI logic
     fun navigateToBottomBarRoute(route: String) { /* ... */
