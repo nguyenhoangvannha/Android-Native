@@ -5,15 +5,16 @@ Compose is declarative and as such the only way to update it is by calling the s
 
 ## State in composables
 - What <br>
-Composable functions can store a single object in memory by using the remember composable.
+    - Composable functions can store a single object in memory by using the remember composable.
 
 - Why <br>
-1. While remember helps you retain state across recompositions, the state is not retained across configuration changes. For this, you must use rememberSaveable. rememberSaveable automatically saves any value that can be saved in a Bundle. For other values, you can pass in a custom saver object.
+    1. While remember helps you retain state across recompositions, the state is not retained across configuration changes. For this, you must use rememberSaveable. rememberSaveable automatically saves any value that can be saved in a Bundle. For other values, you can pass in a custom saver object.
 
-2. This can be useful in situations where a caller doesn't need to control the state and can use it without having to manage the state themselves.
+    2. This can be useful in situations where a caller doesn't need to control the state and can use it without having to manage the state themselves.
 
 - How <br>
-A value computed by remember is stored in the Composition during initial composition, and the stored value is returned during recomposition. remember can be used to store both mutable and immutable objects.
+    - A value computed by remember is stored in the Composition during initial composition, and the stored value is returned during recomposition. remember can be used to store both mutable and immutable objects.
+    - A Composition is a tree-structure of the composables that describe your UI.
 
 ``` Kotlin
 interface MutableState<T> : State<T> {

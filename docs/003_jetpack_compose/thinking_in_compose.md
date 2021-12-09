@@ -1,23 +1,26 @@
 # Thinking in Compose 
 
-## The declarative programming paradigm
+## Compose and The declarative programming paradigm
 - What <br> 
-Jetpack Compose is a modern declarative UI Toolkit for Android. Compose is a declarative UI framework.
+    - Imperative UI involves having a separate prototype/model of the application’s UI.
+    - Declarative UI allows the developers to design the user interface based on the data received and makes use of one programming language to create an entire application.
+    - Jetpack Compose is a modern declarative UI Toolkit for Android. Compose is a declarative UI framework.
 - Why  <br> 
- Historically, an Android view hierarchy has been representable as a tree of UI widgets. The most common way of updating the UI is to walk the tree. Manipulating views manually increases the likelihood of errors.
+    - Historically, an Android view hierarchy has been representable as a tree of UI widgets. The most common way of updating the UI is to walk the tree. Manipulating views manually increases the likelihood of errors.
 - How  <br> 
-A declarative UI model works by conceptually regenerating the entire screen from scratch, then applying only the necessary changes. Compose intelligently chooses which parts of the UI need to be redrawn at any given time.
+    - A declarative UI model works by conceptually regenerating the entire screen from scratch, then applying only the necessary changes. Compose intelligently chooses which parts of the UI need to be redrawn at any given time.
 
 ## A simple composable function
-- What: A composable function that take in data and emit UI elements.
+- What: 
+    - A composable function that take in data and emit UI elements.
 
 - How
-``` Kotlin
-@Composable
-fun Greeting(name: String) {
-    Text("Hello $name)
-}
-```
+    ``` Kotlin
+    @Composable
+    fun Greeting(name: String) {
+        Text("Hello $name)
+    }
+    ```
 
 _Note_
 

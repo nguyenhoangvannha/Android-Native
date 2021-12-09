@@ -8,7 +8,7 @@ import com.nhvn.todoandroidnative.models.TodoModel
 import com.nhvn.todoandroidnative.models.TodoWorkingStateEnum
 
 data class ExampleUiState(
-    var todos: List<TodoModel> = emptyList(),
+    var todos: Map<String, TodoModel> = emptyMap(),
 )
 
 class TodoViewModel() : ViewModel() {
@@ -16,9 +16,9 @@ class TodoViewModel() : ViewModel() {
 
     fun addTodo(todo: TodoModel) {
 
-        val newTodos = uiState.todos.toMutableList();
+        val newTodos = uiState.todos.toMutableMap()
 
-        newTodos.add(todo)
+        newTodos[todo.id] = todo
 
         uiState = uiState.copy(
             todos = newTodos
@@ -27,7 +27,10 @@ class TodoViewModel() : ViewModel() {
 
     fun changeTodoWorkingState(todo: TodoModel, newState: TodoWorkingStateEnum) {
 
-        val newTodos = uiState.todos.toMutableList();
+        val newTodos = uiState.todos.toMutableMap()
+
+        newTodos[todo.id] = todo.copy(state = newState)
+
         uiState = uiState.copy(
             todos = newTodos
         )
