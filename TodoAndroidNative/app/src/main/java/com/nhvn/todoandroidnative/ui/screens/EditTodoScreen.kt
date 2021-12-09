@@ -40,7 +40,7 @@ fun EditTodoScreen(navController: NavHostController, viewModel: TodoViewModel = 
                 content = {
                     EditTodo(
                         onSave = {
-                            viewModel.addTodo(TodoModel(title = it))
+                            viewModel.addTodo(it)
                             navController.popBackStack()
                         },
                         onCancel = {
