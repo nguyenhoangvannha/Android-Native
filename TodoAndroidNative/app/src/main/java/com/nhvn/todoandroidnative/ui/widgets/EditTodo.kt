@@ -22,7 +22,6 @@ fun EditTodo(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .fillMaxHeight()
     ) {
         val (title, setTitle) = remember { mutableStateOf("") }
         val (description, setDescription) = remember { mutableStateOf("") }

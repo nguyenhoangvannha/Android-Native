@@ -89,33 +89,38 @@ fun HomeScreen(navController: NavController, todoViewModel: TodoViewModel = view
         ) {
             Column(
                 modifier = Modifier.fillMaxHeight(),
-                verticalArrangement = Arrangement.SpaceBetween
             ) {
-                when (selectedTabIndex) {
-                    0 -> ListTodo(
-                        todos = uiState.todos.values.toList(),
-                        modifier = Modifier.padding(16.dp),
-                        onNewTodoWorkingStateSelected = { todo, newState ->
-                            todoViewModel.changeTodoWorkingState(todo, newState)
-                        }
-                    )
-                    1 -> ListTodo(
-                        todos = uiState.todos.values.toList().filter { it.state == TodoWorkingStateEnum.inprocess },
-                        modifier = Modifier.padding(16.dp),
-                        onNewTodoWorkingStateSelected = { todo, newState ->
-                            todoViewModel.changeTodoWorkingState(todo, newState)
-                        }
-                    )
-                    2 -> ListTodo(
-                        todos = uiState.todos.values.toList().filter { it.state == TodoWorkingStateEnum.done },
-                        modifier = Modifier.padding(16.dp),
-                        onNewTodoWorkingStateSelected = { todo, newState ->
-                            todoViewModel.changeTodoWorkingState(todo, newState)
-                        }
-                    )
+                Box(modifier = Modifier.weight(1F)) {
+                    when (selectedTabIndex) {
+                        0 -> ListTodo(
+                            todos = uiState.todos.values.toList(),
+                            modifier = Modifier.padding(16.dp),
+                            onNewTodoWorkingStateSelected = { todo, newState ->
+                                todoViewModel.changeTodoWorkingState(todo, newState)
+                            }
+                        )
+                        1 -> ListTodo(
+                            todos = uiState.todos.values.toList()
+                                .filter { it.state == TodoWorkingStateEnum.inprocess },
+                            modifier = Modifier.padding(16.dp),
+                            onNewTodoWorkingStateSelected = { todo, newState ->
+                                todoViewModel.changeTodoWorkingState(todo, newState)
+                            }
+                        )
+                        2 -> ListTodo(
+                            todos = uiState.todos.values.toList()
+                                .filter { it.state == TodoWorkingStateEnum.done },
+                            modifier = Modifier.padding(16.dp),
+                            onNewTodoWorkingStateSelected = { todo, newState ->
+                                todoViewModel.changeTodoWorkingState(todo, newState)
+                            }
+                        )
+                    }
                 }
 
+
                 EditTodo(
+                    // modifier = Modifier.weight(1.0F),
                     onSave = {
                         todoViewModel.addTodo(it)
                     },
