@@ -5,13 +5,19 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.navigation.compose.rememberNavController
+import com.nhvn.todoandroidnative.ui.MyApp
+import com.nhvn.todoandroidnative.ui.navigation.AppNavHost
 
 const val EXTRA_MESSAGE = "com.nhvn.todoandroidnative.MESSAGE"
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContent {
+            MyApp()
+        }
     }
 
     fun sendMessage(view: View) {
