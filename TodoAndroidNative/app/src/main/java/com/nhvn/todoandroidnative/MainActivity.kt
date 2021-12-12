@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        lifecycle.addObserver(MyActivityLifecycleObserver())
+        lifecycle.addObserver(MyActivityLifecycleObserver(lifecycle))
 
         userNote = savedInstanceState?.getString(USERNOTE_STATE_KEY)
 

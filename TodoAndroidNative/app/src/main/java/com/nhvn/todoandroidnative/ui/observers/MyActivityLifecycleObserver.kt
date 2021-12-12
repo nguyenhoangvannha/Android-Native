@@ -2,9 +2,12 @@ package com.nhvn.todoandroidnative.ui.observers
 
 import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 
-class MyActivityLifecycleObserver : DefaultLifecycleObserver {
+class MyActivityLifecycleObserver(private val lifecycle: Lifecycle) :
+    DefaultLifecycleObserver {
+
     override fun onCreate(owner: LifecycleOwner) {
         Log.i("MyActivityLCObserver", "onCreate")
         super.onCreate(owner)
@@ -33,5 +36,11 @@ class MyActivityLifecycleObserver : DefaultLifecycleObserver {
     override fun onDestroy(owner: LifecycleOwner) {
         Log.i("MyActivityLCObserver", "onDestroy")
         super.onDestroy(owner)
+    }
+
+    fun onlyRunWhenStateStarted() {
+        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+            Log.i("MyActivityLCObserver", "onlyRunWhenStateStarted")
+        }
     }
 }

@@ -1,4 +1,4 @@
-# Handling Lifecycles with Lifecycle-Aware Components
+# [Handling Lifecycles with Lifecycle-Aware Components](https://developer.android.com/topic/libraries/architecture/lifecycle)
 - What
     - Lifecycle-aware components perform actions in response to a change in the lifecycle status of another component, such as activities and fragments.
 - Why
