@@ -1,0 +1,65 @@
+@startuml
+[*] --> onCreate: Activity launched
+
+state onCreate #green {
+note right of onCreate
+ - must call setContentView 
+ to define activity's user interface
+ - restore previous app state from saved bundle
+end note
+}
+onCreate ---> onStart : Started state
+onCreate ---> onStart : Visible to the user
+
+state onStart {
+note right of onStart
+ - preparations for become
+ - to foreground and interactive
+end note
+}
+
+onStart ---> onResume
+
+state onResume {
+note left of onResume
+ - call just before activity interracts with user
+ - activity now on top of activitys stack
+end note
+}
+
+
+onResume ---> onPause: loses focus / user leaving activity / particual visible
+
+state onPause {
+note left of onPause
+ - can update UI
+ - not use to save user data
+ - dont network call
+ - dont database transaction
+end note
+}
+onPause ---> onResume
+
+onPause ---> onStop: no visible to user
+
+onStop ---> onRestart: user navigate to activity
+
+onStop ---> onCreate: app process killed
+state onRestart {
+note right of onRestart: restore activity state
+}
+
+
+onRestart ---> onStart
+
+onStop ---> onDestroy
+
+state onDestroy #red{
+note right of onDestroy
+ - call before destroy
+ - release resources
+end note
+}
+
+onDestroy ---> [*]: Activity shutdown
+@enduml
