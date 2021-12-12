@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.nhvn.todoandroidnative.ui.MyApp
 import com.nhvn.todoandroidnative.ui.navigation.AppNavHost
+import com.nhvn.todoandroidnative.ui.observers.MyActivityLifecycleObserver
 
 const val EXTRA_MESSAGE = "com.nhvn.todoandroidnative.MESSAGE"
 const val USERNOTE_STATE_KEY = "com.nhvn.todoandroidnative.USERNOTE_STATE_KEY"
@@ -26,6 +27,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        lifecycle.addObserver(MyActivityLifecycleObserver())
 
         userNote = savedInstanceState?.getString(USERNOTE_STATE_KEY)
 
