@@ -18,11 +18,14 @@ import androidx.compose.ui.Modifier
 import androidx.core.os.bundleOf
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import androidx.navigation.compose.rememberNavController
+import com.google.android.material.tabs.TabLayout
 import com.nhvn.todoandroidnative.ui.MyApp
 import com.nhvn.todoandroidnative.ui.navigation.AppNavHost
 import com.nhvn.todoandroidnative.ui.observers.MyActivityLifecycleObserver
-import com.nhvn.todoandroidnative.ui.screens.homescreen.ExampleFragment
+import com.nhvn.todoandroidnative.ui.screens.homescreen.ComposablesExampleFragment
+import com.nhvn.todoandroidnative.ui.screens.homescreen.XmlExampleFragment
 
 const val EXTRA_MESSAGE = "com.nhvn.todoandroidnative.MESSAGE"
 const val USERNOTE_STATE_KEY = "com.nhvn.todoandroidnative.USERNOTE_STATE_KEY"
@@ -40,17 +43,57 @@ class MainActivity : AppCompatActivity() {
         if (userNote != null)
             Log.i("onCreate", "$USERNOTE_STATE_KEY$userNote")
 
+        setContentView(R.layout.activity_main)
+
         //In the previous example, note that the fragment transaction is only created when savedInstanceState is null. This is to ensure that the fragment is added only once, when the activity is first created. When a configuration change occurs and the activity is recreated, savedInstanceState is no longer null, and the fragment does not need to be added a second time, as the fragment is automatically restored from the savedInstanceState.
         if (savedInstanceState == null) {
             //If your fragment requires some initial data, arguments can be passed to your fragment by providing a Bundle in the call to FragmentTransaction.add(), as shown below:
             val bundle = bundleOf("some_int" to 0)
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                add<ExampleFragment>(R.id.fragmentContainerView, args = bundle)
+                add<XmlExampleFragment>(R.id.fragmentContainerView, args = bundle)
+                addToBackStack("XmlExampleFragment")
             }
+
         }
 
-        setContentView(R.layout.activity_main)
+        val tabLayout = findViewById<TabLayout>(R.id.tab_layout)
+
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                Log.i("TABID", "${tab!!.id}");
+                when (tab.position) {
+                    (0) -> {
+                        Log.i("TABID", "R.id.tabItem");
+                        supportFragmentManager.commit {
+                            replace<ComposablesExampleFragment>(R.id.fragmentContainerView)
+                            setReorderingAllowed(true)
+                            addToBackStack("ComposablesExampleFragment") // name can be null
+                        }
+                    }
+                    (1) -> {
+                        Log.i("TABID", "R.id.tabItem2");
+                        supportFragmentManager.commit {
+                            setReorderingAllowed(true)
+                            replace<XmlExampleFragment>(
+                                R.id.fragmentContainerView,
+                                args = bundleOf("some_int" to 0)
+                            )
+                            addToBackStack("XmlExampleFragment")
+                        }
+                    }
+                }
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+        })
 
 //        setContent {
 //            val (title, setTitle) = remember { mutableStateOf(if (userNote != null) userNote else "") }
@@ -62,6 +105,12 @@ class MainActivity : AppCompatActivity() {
 //                })
 //            }
 //        }
+    }
+
+    override fun onStart() {
+
+
+        super.onStart()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
