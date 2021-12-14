@@ -8,21 +8,25 @@ import android.view.View
 import android.widget.EditText
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 import androidx.navigation.compose.rememberNavController
 import com.nhvn.todoandroidnative.ui.MyApp
 import com.nhvn.todoandroidnative.ui.navigation.AppNavHost
 import com.nhvn.todoandroidnative.ui.observers.MyActivityLifecycleObserver
+import com.nhvn.todoandroidnative.ui.screens.homescreen.ExampleFragment
 
 const val EXTRA_MESSAGE = "com.nhvn.todoandroidnative.MESSAGE"
 const val USERNOTE_STATE_KEY = "com.nhvn.todoandroidnative.USERNOTE_STATE_KEY"
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     var userNote: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,16 +39,25 @@ class MainActivity : ComponentActivity() {
         if (userNote != null)
             Log.i("onCreate", "$USERNOTE_STATE_KEY$userNote")
 
-        setContent {
-            val (title, setTitle) = remember { mutableStateOf(if (userNote != null) userNote else "") }
-            Column() {
-                MyApp(modifier = Modifier.weight(1F))
-                TextField(value = title!!, onValueChange = {
-                    setTitle(it)
-                    userNote = it
-                })
+        if (savedInstanceState == null) {
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                add<ExampleFragment>(R.id.fragmentContainerView)
             }
         }
+
+        setContentView(R.layout.activity_main)
+
+//        setContent {
+//            val (title, setTitle) = remember { mutableStateOf(if (userNote != null) userNote else "") }
+//            Column() {
+//                MyApp(modifier = Modifier.weight(1F))
+//                TextField(value = title!!, onValueChange = {
+//                    setTitle(it)
+//                    userNote = it
+//                })
+//            }
+//        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

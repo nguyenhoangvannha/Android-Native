@@ -9,3 +9,7 @@
     - Fragment defines and manage its own layout, has its own lifecycle, and can handle its own input events
 - When
     - Can add fragment when activity is in the STARTED state or higher
+- Example
+    - Extend Fragment class
+    - DialogFragment
+    - PreferenceFragmentCompat
