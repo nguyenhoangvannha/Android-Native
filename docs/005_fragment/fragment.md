@@ -11,5 +11,5 @@
     - Can add fragment when activity is in the STARTED state or higher
 - Example
     - Extend Fragment class
-    - DialogFragment
-    - PreferenceFragmentCompat
+    - DialogFragment: Show Dialog
+    - PreferenceFragmentCompat: Save preference to local storage
