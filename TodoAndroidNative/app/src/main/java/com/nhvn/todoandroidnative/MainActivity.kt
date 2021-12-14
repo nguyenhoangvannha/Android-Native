@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
+import android.view.Window
 import android.widget.EditText
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -16,6 +17,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.core.os.bundleOf
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
@@ -31,28 +33,22 @@ const val EXTRA_MESSAGE = "com.nhvn.todoandroidnative.MESSAGE"
 const val USERNOTE_STATE_KEY = "com.nhvn.todoandroidnative.USERNOTE_STATE_KEY"
 
 class MainActivity : AppCompatActivity() {
-    var userNote: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
+
         lifecycle.addObserver(MyActivityLifecycleObserver(lifecycle))
-
-        userNote = savedInstanceState?.getString(USERNOTE_STATE_KEY)
-
-        if (userNote != null)
-            Log.i("onCreate", "$USERNOTE_STATE_KEY$userNote")
 
         setContentView(R.layout.activity_main)
 
         //In the previous example, note that the fragment transaction is only created when savedInstanceState is null. This is to ensure that the fragment is added only once, when the activity is first created. When a configuration change occurs and the activity is recreated, savedInstanceState is no longer null, and the fragment does not need to be added a second time, as the fragment is automatically restored from the savedInstanceState.
         if (savedInstanceState == null) {
-            //If your fragment requires some initial data, arguments can be passed to your fragment by providing a Bundle in the call to FragmentTransaction.add(), as shown below:
-            val bundle = bundleOf("some_int" to 0)
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                add<XmlExampleFragment>(R.id.fragmentContainerView, args = bundle)
-                addToBackStack("XmlExampleFragment")
+                add<ComposablesExampleFragment>(R.id.fragmentContainerView)
+                addToBackStack("ComposablesExampleFragment")
             }
 
         }
@@ -94,17 +90,6 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-
-//        setContent {
-//            val (title, setTitle) = remember { mutableStateOf(if (userNote != null) userNote else "") }
-//            Column() {
-//                MyApp(modifier = Modifier.weight(1F))
-//                TextField(value = title!!, onValueChange = {
-//                    setTitle(it)
-//                    userNote = it
-//                })
-//            }
-//        }
     }
 
     override fun onStart() {
@@ -114,21 +99,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.run {
-            putString(USERNOTE_STATE_KEY, userNote)
-        }
-        if (userNote != null)
-            Log.i("onSaveInstanceState", "$USERNOTE_STATE_KEY$userNote")
         super.onSaveInstanceState(outState)
     }
 
-    // After onStart
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        userNote = savedInstanceState.getString(USERNOTE_STATE_KEY)
-        if (userNote != null)
-            Log.i("onRestoreInstanceState", "$USERNOTE_STATE_KEY$userNote")
-        super.onRestoreInstanceState(savedInstanceState)
-    }
+//    // After onStart
+//    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+//        userNote = savedInstanceState.getString(USERNOTE_STATE_KEY)
+//        if (userNote != null)
+//            Log.i("onRestoreInstanceState", "$USERNOTE_STATE_KEY$userNote")
+//        super.onRestoreInstanceState(savedInstanceState)
+//    }
 
     fun sendMessage(view: View) {
         val editText = findViewById<EditText>(R.id.editTextTextPersonName)
