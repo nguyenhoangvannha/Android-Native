@@ -40,7 +40,7 @@ class XmlExampleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         //If your fragment requires some initial data, arguments can be passed to your fragment by providing a Bundle in the call to FragmentTransaction.add(), as shown below:
-        val someInt = requireArguments().getInt("some_int")
+        //val someInt = requireArguments().getInt("some_int")
         super.onViewCreated(view, savedInstanceState)
     }
 

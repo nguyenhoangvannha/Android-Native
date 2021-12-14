@@ -34,16 +34,16 @@ class ComposablesExampleFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//
-//        userNote = savedInstanceState?.getString(USERNOTE_STATE_KEY)
-//
-//        if (userNote != null)
-//            Log.i("onCreate", "$USERNOTE_STATE_KEY$userNote")
-//
-//        arguments?.let {
-//            param1 = it.getString(ARG_PARAM1)
-//            param2 = it.getString(ARG_PARAM2)
-//        }
+
+        userNote = savedInstanceState?.getString(USERNOTE_STATE_KEY)
+
+        if (userNote != null)
+            Log.i("onCreate", "$USERNOTE_STATE_KEY$userNote")
+
+        arguments?.let {
+            param1 = it.getString(ARG_PARAM1)
+            param2 = it.getString(ARG_PARAM2)
+        }
     }
 
     override fun onCreateView(
@@ -66,11 +66,11 @@ class ComposablesExampleFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-//        outState.run {
-//            putString(USERNOTE_STATE_KEY, userNote)
-//        }
-//        if (userNote != null)
-//            Log.i("onSaveInstanceState", "$USERNOTE_STATE_KEY$userNote")
+        outState.run {
+            putString(USERNOTE_STATE_KEY, userNote)
+        }
+        if (userNote != null)
+            Log.i("onSaveInstanceState", "$USERNOTE_STATE_KEY$userNote")
         super.onSaveInstanceState(outState)
     }
 
