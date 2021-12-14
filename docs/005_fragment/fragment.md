@@ -1,0 +1,11 @@
+# Fragment
+- What
+    - A Fragment represents a portion of app's UI
+- Why
+    - Using fragment to reuse a portion of app's UI
+- Where
+    - Fragment must hosted by an activity or another fragment
+- How
+    - Fragment defines and manage its own layout, has its own lifecycle, and can handle its own input events
+- When
+    - Can add fragment when activity is in the STARTED state or higher
