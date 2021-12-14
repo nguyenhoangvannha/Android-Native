@@ -15,6 +15,7 @@ import androidx.compose.material.TextField
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.core.os.bundleOf
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.navigation.compose.rememberNavController
@@ -39,10 +40,13 @@ class MainActivity : AppCompatActivity() {
         if (userNote != null)
             Log.i("onCreate", "$USERNOTE_STATE_KEY$userNote")
 
+        //In the previous example, note that the fragment transaction is only created when savedInstanceState is null. This is to ensure that the fragment is added only once, when the activity is first created. When a configuration change occurs and the activity is recreated, savedInstanceState is no longer null, and the fragment does not need to be added a second time, as the fragment is automatically restored from the savedInstanceState.
         if (savedInstanceState == null) {
+            //If your fragment requires some initial data, arguments can be passed to your fragment by providing a Bundle in the call to FragmentTransaction.add(), as shown below:
+            val bundle = bundleOf("some_int" to 0)
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                add<ExampleFragment>(R.id.fragmentContainerView)
+                add<ExampleFragment>(R.id.fragmentContainerView, args = bundle)
             }
         }
 
