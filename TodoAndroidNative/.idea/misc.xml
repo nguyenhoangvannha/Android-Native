@@ -12,6 +12,7 @@
         <entry key="app/src/main/res/layout/activity_display_message.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_intent.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_receiving_intent.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_composables_example.xml" value="0.3491401771756123" />
         <entry key="app/src/main/res/layout/fragment_example.xml" value="0.10287303058387395" />
         <entry key="app/src/main/res/layout/fragment_xml_example.xml" value="0.3253012048192771" />
