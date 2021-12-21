@@ -6,6 +6,7 @@
         - [Jetpack compose](./docs/003_jetpack_compose/index.md)
     - 004 [Activity](./docs/004_activity/index.md)
     - 005 [Fragment](./docs/005_fragment/fragment.md)
+    - 006 [Intent](./docs/005_fragment/intent.md)
 
 - Examples
     - https://github.com/android/architecture-components-samples/tree/main/BasicSample
