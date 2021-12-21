@@ -12,4 +12,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Set an alarm" />
+
+    <Button
+        android:id="@+id/btnGetAlarms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get alarms" />
+
+    <Button
+        android:id="@+id/btnGetContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get a contact" />
 </androidx.appcompat.widget.LinearLayoutCompat>

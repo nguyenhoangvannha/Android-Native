@@ -13,6 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TodoAndroidNative">
         <activity
+            android:name=".ReceivingIntentActivity"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.SET_ALARM" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.SHOW_ALARMS" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".IntentActivity"
             android:exported="false" />
         <activity
