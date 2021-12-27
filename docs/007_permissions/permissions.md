@@ -19,6 +19,7 @@
     - Example: Take a photo
 - Request run-time permission only at the time when user uses an app feature that require that permission
 - Each time your app needs to access functionality that requires a permission, you should check that your app is still granted that permission.
+- Know the libraries permissions you're working with
 
 ## Permission workflow runtime
 ![Permission workflow runtime](permissions-workflow-runtime.svg)
@@ -29,3 +30,14 @@
 - Request to become the default handler if necessary - If you want to request the permissions specific to call logs and SMS messages
 - Grant all runtime permissions for testing purposes
     - adb shell install -g PATH_TO_APK_FILE
+- List permissions and status by group:
+
+```$ adb shell pm list permissions -d -g```
+- Grant or revoke one or more permissions:
+```$ adb shell pm [grant|revoke] <permission-name>```
+
+- Identify the screen location of camera and microphone are using indicators
+![](mic-camera-indicators.svg)
+- On supported devices that run Android 12 or higher, users can enable and disable camera and microphone access for all apps on the device by pressing a single toggle option. ![](mic-camera-toggles.svg)
+
+## Restrict interactions with other apps by set your app components permission

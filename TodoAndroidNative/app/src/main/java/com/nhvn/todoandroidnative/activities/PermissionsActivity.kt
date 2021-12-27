@@ -2,6 +2,8 @@ package com.nhvn.todoandroidnative.activities
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.hardware.SensorPrivacyManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -22,6 +24,7 @@ class PermissionsActivity : AppCompatActivity() {
     //    lateinit var activityResultLauncher: ActivityResultLauncher<String>
     lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
     lateinit var btnRequestPermisson: Button
+    lateinit var tvSensorPrivacyManager: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_permissions)
@@ -32,6 +35,7 @@ class PermissionsActivity : AppCompatActivity() {
         btnShouldShowRequestPermissionRationale =
             findViewById<Button>(R.id.btnShouldShowRequestPermissionRationale);
         btnRequestPermisson = findViewById<Button>(R.id.btnRequestPermisson);
+        tvSensorPrivacyManager = findViewById<TextView>(R.id.tvSensorPrivacyManager);
 
 //        activityResultLauncher = registerForActivityResult(
 //            ActivityResultContracts.RequestPermission(),
@@ -61,6 +65,8 @@ class PermissionsActivity : AppCompatActivity() {
                 checkDeviceHasAFeature()
             }
         })
+
+        checkDeviceSupportCameraMicToggles();
     }
 
     private fun checkDeviceHasAFeature() {
@@ -127,6 +133,26 @@ class PermissionsActivity : AppCompatActivity() {
 
     private fun requestPermission() {
         requestPermissionLauncher.launch(Manifest.permission.CAMERA);
+    }
+
+    private fun checkDeviceSupportCameraMicToggles() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val sensorPrivacyManager = applicationContext
+                .getSystemService(SensorPrivacyManager::class.java)
+                    as SensorPrivacyManager
+            val supportsMicrophoneToggle =
+                sensorPrivacyManager
+                    .supportsSensorToggle(SensorPrivacyManager.Sensors.MICROPHONE)
+
+            val supportsCameraToggle = sensorPrivacyManager
+                .supportsSensorToggle(SensorPrivacyManager.Sensors.CAMERA)
+
+            tvSensorPrivacyManager.text =
+                "supportsMicrophoneToggle$supportsMicrophoneToggle - supportsCameraToggle$supportsCameraToggle"
+        } else {
+            tvSensorPrivacyManager.text = "sensorPrivacyManager\n" +
+                    "                .supportsSensorToggle require api level 31"
+        }
     }
 }
 
