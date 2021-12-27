@@ -1,6 +1,5 @@
 package com.nhvn.todoandroidnative
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
@@ -117,15 +116,6 @@ class MainActivity : AppCompatActivity() {
 //            Log.i("onRestoreInstanceState", "$USERNOTE_STATE_KEY$userNote")
 //        super.onRestoreInstanceState(savedInstanceState)
 //    }
-
-    fun sendMessage(view: View) {
-        val editText = findViewById<EditText>(R.id.editTextTextPersonName)
-        val message = editText.text.toString();
-        val intent = Intent(this, DisplayMessageActivity::class.java).apply {
-            putExtra(EXTRA_MESSAGE, message)
-        }
-        startActivity(intent)
-    }
 
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
         override fun getItemCount(): Int = NUM_PAGES
