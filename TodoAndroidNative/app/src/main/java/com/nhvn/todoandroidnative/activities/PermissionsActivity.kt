@@ -52,7 +52,7 @@ class PermissionsActivity : AppCompatActivity() {
                     // same time, respect the user's decision. Don't link to system
                     // settings in an effort to convince the user to change their
                     // decision.
-                    btnRequestPermisson.text = "feature is unavailable"
+                    btnRequestPermisson.text = "Include photo feature is unavailable"
                 }
             }
 

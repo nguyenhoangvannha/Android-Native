@@ -18,8 +18,14 @@
 - Consider whether another installed app might be able to perform the functionality on your app's behalf -> You do not need to request a permission to do that action.
     - Example: Take a photo
 - Request run-time permission only at the time when user uses an app feature that require that permission
-
+- Each time your app needs to access functionality that requires a permission, you should check that your app is still granted that permission.
 
 ## Permission workflow runtime
 ![Permission workflow runtime](permissions-workflow-runtime.svg)
 
+## Attention
+- One-time permissions whenever your app requests a permission related to location, microphone, or camera
+- Android auto-resets permissions of unused apps - Android 11 (API level 30) or higher
+- Request to become the default handler if necessary - If you want to request the permissions specific to call logs and SMS messages
+- Grant all runtime permissions for testing purposes
+    - adb shell install -g PATH_TO_APK_FILE
