@@ -12,6 +12,7 @@ import com.nhvn.todoandroidnative.DisplayMessageActivity
 import com.nhvn.todoandroidnative.EXTRA_MESSAGE
 import com.nhvn.todoandroidnative.IntentActivity
 import com.nhvn.todoandroidnative.R
+import com.nhvn.todoandroidnative.activities.PermissionsActivity
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -58,6 +59,13 @@ class XmlExampleFragment : Fragment() {
             .setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View?) {
                     val intent = Intent(activity, IntentActivity::class.java)
+                    startActivity(intent)
+                }
+            })
+        view.findViewById<Button>(R.id.btnPermissionsActivity)
+            .setOnClickListener(object : View.OnClickListener {
+                override fun onClick(v: View?) {
+                    val intent = Intent(activity, PermissionsActivity::class.java)
                     startActivity(intent)
                 }
             })

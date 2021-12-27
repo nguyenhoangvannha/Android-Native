@@ -37,6 +37,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Intent Activity" />
+
+        <Button
+            android:id="@+id/btnPermissionsActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Permissions Activity" />
     </LinearLayout>
 
 </FrameLayout>

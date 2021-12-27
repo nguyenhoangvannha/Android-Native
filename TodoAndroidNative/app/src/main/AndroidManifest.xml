@@ -4,6 +4,12 @@
 
     <uses-permission android:name="com.nhvn.todo.permission.SHARE_POST" />
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -13,10 +19,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TodoAndroidNative">
         <activity
+            android:name=".activities.PermissionsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ReceivingIntentActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.SET_ALARM" />
+
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <action android:name="android.intent.action.SHOW_ALARMS" />
