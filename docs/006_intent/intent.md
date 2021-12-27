@@ -76,8 +76,24 @@
 - What
     - When more than one app can handle your intent you can force to show an app chooser
     - Prevent user from choosing a default app to handle your intent
+- How
+```Kotlin
+val chooser: Intent = Intent.createChooser(intent, "Please choose an app(Forced)")
+startActivity(chooser)
+```
 ### Detect unsafe intent launches(nested intent)
  https://medium.com/androiddevelopers/android-nesting-intents-e472fafc1933
  
 ### Intent filter
 ### Pending intent
+- What
+    - A container to wrap an intent which will execute later by another app
+- Example:
+    - An pending intent contain an intent will execute when
+        - User click notification
+        - User click app widget
+        - Execute at a specific time
+- Specify mutability(>= Android 12)
+    - Specify mutability to control other app modify your intent
+    - If PendingIntent.FLAG_IMMUTABLE: other app cannot adjust result by modify intent
+    - Set flag: PendingIntent.FLAG_IMMUTABLE, PendingIntent.FLAG_MUTABLE
