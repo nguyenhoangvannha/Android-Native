@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TodoAndroidNative">
         <activity
-            android:name=".activities.DataAccessRationaleActivity"
+            android:name="com.nhvn.todoandroidnative.ui.elements.activities.DataAccessRationaleActivity"
             android:permission="android.permission.START_VIEW_PERMISSION_USAGE"
             android:exported="true">
             <!-- VIEW_PERMISSION_USAGE shows a selectable information icon on
@@ -34,10 +34,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.PermissionsActivity"
+            android:name="com.nhvn.todoandroidnative.ui.elements.activities.PermissionsActivity"
             android:exported="false" />
         <activity
-            android:name=".ReceivingIntentActivity"
+            android:name=".ui.elements.ReceivingIntentActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.SET_ALARM" />
@@ -49,10 +49,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".IntentActivity"
+            android:name=".ui.elements.IntentActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.elements.MainActivity"
             android:exported="true"
             android:label="@string/main_activity">
             <intent-filter>
@@ -62,13 +62,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DisplayMessageActivity"
+            android:name=".ui.elements.DisplayMessageActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".ui.elements.MainActivity"
             android:permission="com.nhvn.todo.permission.SHARE_POST">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".ui.elements.MainActivity" />
         </activity>
     </application>
 
