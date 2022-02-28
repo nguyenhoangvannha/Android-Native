@@ -6,19 +6,24 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.nhvn.todoandroidnative.ui.elements.screens.EditTodoScreen
 import com.nhvn.todoandroidnative.ui.elements.screens.HomeScreen
+import com.nhvn.todoandroidnative.ui.stateholders.viewmodel.TodoViewModel
 
 @Composable
 fun AppNavHost(
     navController: NavHostController,
     startDestination: String = Routes.homeScreen,
+    todoViewModel: TodoViewModel,
 ) {
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
-        composable(Routes.homeScreen) {
-            HomeScreen(navController)
-        }
+//        composable(Routes.homeScreen) {
+//            HomeScreen(//navController,
+//                todoViewModel = todoViewModel,
+//                todos = todos
+//            )
+//        }
         composable(Routes.editTodoScreen) {
             EditTodoScreen(navController)
         }

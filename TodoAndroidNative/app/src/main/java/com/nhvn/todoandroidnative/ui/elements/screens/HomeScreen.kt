@@ -12,12 +12,15 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.nhvn.todoandroidnative.data.datasources.models.Todo
 import com.nhvn.todoandroidnative.data.datasources.models.TodoWorkingStateEnum
 import com.nhvn.todoandroidnative.ui.elements.navigation.Routes
 import com.nhvn.todoandroidnative.ui.stateholders.state.rememberMyAppState
@@ -28,8 +31,13 @@ import com.nhvn.todoandroidnative.ui.elements.widgets.ListTodo
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavController, todoViewModel: TodoViewModel = viewModel()) {
-    val uiState = todoViewModel.uiState
+fun HomeScreen(
+//    navController: NavController,
+    todoViewModel: TodoViewModel
+) {
+
+    val state = todoViewModel.allWords.observeAsState(initial = emptyList())
+    val todos = state.value
 
     val myAppState = rememberMyAppState()
 
@@ -79,7 +87,7 @@ fun HomeScreen(navController: NavController, todoViewModel: TodoViewModel = view
             floatingActionButton = {
                 if (myAppState.shouldShowAddTodoFloatingActionButton) {
                     FloatingActionButton(onClick = {
-                        navController.navigate(Routes.editTodoScreen)
+//                        navController.navigate(Routes.editTodoScreen)
                     }) {
                         Icon(Icons.Rounded.Add, contentDescription = "Localized description")
                     }
@@ -93,26 +101,26 @@ fun HomeScreen(navController: NavController, todoViewModel: TodoViewModel = view
                 Box(modifier = Modifier.weight(1F)) {
                     when (selectedTabIndex) {
                         0 -> ListTodo(
-                            todos = uiState.todos.values.toList(),
+                            todos = todos,
                             modifier = Modifier.padding(16.dp),
                             onNewTodoWorkingStateSelected = { todo, newState ->
-                                todoViewModel.changeTodoWorkingState(todo, newState)
+                                //todoViewModel.changeTodoWorkingState(todo, newState)
                             }
                         )
                         1 -> ListTodo(
-                            todos = uiState.todos.values.toList()
+                            todos = todos
                                 .filter { it.state == TodoWorkingStateEnum.inprocess },
                             modifier = Modifier.padding(16.dp),
                             onNewTodoWorkingStateSelected = { todo, newState ->
-                                todoViewModel.changeTodoWorkingState(todo, newState)
+                                // todoViewModel.changeTodoWorkingState(todo, newState)
                             }
                         )
                         2 -> ListTodo(
-                            todos = uiState.todos.values.toList()
+                            todos = todos
                                 .filter { it.state == TodoWorkingStateEnum.done },
                             modifier = Modifier.padding(16.dp),
                             onNewTodoWorkingStateSelected = { todo, newState ->
-                                todoViewModel.changeTodoWorkingState(todo, newState)
+                                // todoViewModel.changeTodoWorkingState(todo, newState)
                             }
                         )
                     }
@@ -122,7 +130,7 @@ fun HomeScreen(navController: NavController, todoViewModel: TodoViewModel = view
                 EditTodo(
                     // modifier = Modifier.weight(1.0F),
                     onSave = {
-                        todoViewModel.addTodo(it)
+                        todoViewModel.insert(it)
                     },
                 )
             }
@@ -135,8 +143,8 @@ fun HomeScreen(navController: NavController, todoViewModel: TodoViewModel = view
     }
 }
 
-@Preview
-@Composable
-fun PreviewHomeScreen() {
-    HomeScreen(navController = rememberNavController(), TodoViewModel());
-}
+//@Preview
+//@Composable
+//fun PreviewHomeScreen() {
+//    HomeScreen(navController = rememberNavController(), TodoViewModel(TodoViewModel()));
+//}

@@ -1,38 +1,28 @@
 package com.nhvn.todoandroidnative.ui.stateholders.viewmodel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
-import com.nhvn.todoandroidnative.data.datasources.models.TodoModel
-import com.nhvn.todoandroidnative.data.datasources.models.TodoWorkingStateEnum
+import androidx.lifecycle.*
+import com.nhvn.todoandroidnative.data.datasources.models.Todo
+import com.nhvn.todoandroidnative.data.repositories.TodosRepository
+import kotlinx.coroutines.launch
 
-data class ExampleUiState(
-    var todos: Map<String, TodoModel> = emptyMap(),
-)
+class TodoViewModel(private val todoRepository: TodosRepository) : ViewModel() {
 
-class TodoViewModel() : ViewModel() {
-    var uiState by mutableStateOf<ExampleUiState>(ExampleUiState())
+    val allWords: LiveData<List<Todo>> = todoRepository.allTodos.asLiveData()
 
-    fun addTodo(todo: TodoModel) {
-
-        val newTodos = uiState.todos.toMutableMap()
-
-        newTodos[todo.id] = todo
-
-        uiState = uiState.copy(
-            todos = newTodos
-        )
+    /**
+     * Launching a new coroutine to insert the data in a non-blocking way
+     */
+    fun insert(todo: Todo) = viewModelScope.launch {
+        todoRepository.insert(todo)
     }
+}
 
-    fun changeTodoWorkingState(todo: TodoModel, newState: TodoWorkingStateEnum) {
-
-        val newTodos = uiState.todos.toMutableMap()
-
-        newTodos[todo.id] = todo.copy(state = newState)
-
-        uiState = uiState.copy(
-            todos = newTodos
-        )
+class TodoViewModelFactory(private val repository: TodosRepository) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(TodoViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return TodoViewModel(repository) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
