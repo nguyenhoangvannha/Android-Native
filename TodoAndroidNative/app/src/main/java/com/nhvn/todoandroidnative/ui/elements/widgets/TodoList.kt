@@ -8,16 +8,16 @@ import androidx.compose.material.Divider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.nhvn.todoandroidnative.data.datasources.models.TodoModel
+import com.nhvn.todoandroidnative.data.datasources.models.Todo
 import com.nhvn.todoandroidnative.data.datasources.models.TodoWorkingStateEnum
 import io.github.serpro69.kfaker.faker
 
 
 @Composable
 fun ListTodo(
-    todos: List<TodoModel>,
+    todos: List<Todo>,
     modifier: Modifier = Modifier,
-    onNewTodoWorkingStateSelected: (TodoModel, TodoWorkingStateEnum) -> Unit = { _, _ -> }
+    onNewTodoWorkingStateSelected: (Todo, TodoWorkingStateEnum) -> Unit = { _, _ -> }
 ) {
     LazyColumn(
         modifier = modifier,
@@ -39,5 +39,5 @@ val faker = faker {}
 @Preview
 @Composable
 fun PreviewListTodo() {
-    ListTodo(todos = (1..11).map { TodoModel("id1", "Todo title 1", "Todo description") })
+    ListTodo(todos = (1..11).map { Todo("id1", "Todo title 1", "Todo description") })
 }

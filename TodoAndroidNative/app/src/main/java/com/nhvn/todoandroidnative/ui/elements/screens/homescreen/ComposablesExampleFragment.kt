@@ -12,8 +12,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.fragment.app.viewModels
 import com.nhvn.todoandroidnative.ui.elements.USERNOTE_STATE_KEY
 import com.nhvn.todoandroidnative.ui.MyApp
+import com.nhvn.todoandroidnative.ui.elements.MainActivity
+import com.nhvn.todoandroidnative.ui.stateholders.viewmodel.TodoViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,6 +33,8 @@ class ComposablesExampleFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     var userNote: String? = null
+
+    private val viewModel by viewModels<TodoViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,11 +55,11 @@ class ComposablesExampleFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return ComposeView(context = context!!).apply {
+        return ComposeView(context = requireContext()).apply {
             setContent {
                 val (title, setTitle) = remember { mutableStateOf(if (userNote != null) userNote else "") }
                 Column() {
-                    MyApp(modifier = Modifier.weight(1F))
+                    MyApp(modifier = Modifier.weight(1F), todoViewModel = viewModel)
                     TextField(value = title!!, onValueChange = {
                         setTitle(it)
                         userNote = it

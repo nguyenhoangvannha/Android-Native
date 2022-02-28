@@ -9,14 +9,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.nhvn.todoandroidnative.data.datasources.models.TodoModel
+import com.nhvn.todoandroidnative.data.datasources.models.Todo
 import com.nhvn.todoandroidnative.data.datasources.models.TodoWorkingStateEnum
 
 @Composable
 fun TodoCard(
-    todo: TodoModel,
+    todo: Todo,
     modifier: Modifier = Modifier,
-    onNewTodoWorkingStateSelected: (TodoModel, TodoWorkingStateEnum) -> Unit = { _, _ -> }
+    onNewTodoWorkingStateSelected: (Todo, TodoWorkingStateEnum) -> Unit = { _, _ -> }
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -57,5 +57,5 @@ fun TodoCard(
 @Composable
 @Preview
 fun PreviewTodoCard() {
-    TodoCard(todo = TodoModel("id1", "Todo title 1", "Todo description"))
+    TodoCard(todo = Todo("id1", "Todo title 1", "Todo description"))
 }

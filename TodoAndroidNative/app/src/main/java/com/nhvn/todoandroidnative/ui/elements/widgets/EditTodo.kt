@@ -9,12 +9,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.nhvn.todoandroidnative.data.datasources.models.TodoModel
+import com.nhvn.todoandroidnative.data.datasources.models.Todo
 
 @Composable
 fun EditTodo(
     modifier: Modifier = Modifier,
-    onSave: (TodoModel) -> Unit = {},
+    onSave: (Todo) -> Unit = {},
     onCancel: () -> Unit = {}
 ) {
     Column(
@@ -51,7 +51,7 @@ fun EditTodo(
                 Text(text = "Cancel")
             }
             Button(onClick = {
-                onSave(TodoModel(title = title, description = description))
+                onSave(Todo(title = title, description = description))
                 setTitle("")
                 setDescription("")
             }) {
