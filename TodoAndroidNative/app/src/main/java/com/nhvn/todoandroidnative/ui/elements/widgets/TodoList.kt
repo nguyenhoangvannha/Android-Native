@@ -34,8 +34,6 @@ fun ListTodo(
     }
 }
 
-val faker = faker {}
-
 @Preview
 @Composable
 fun PreviewListTodo() {

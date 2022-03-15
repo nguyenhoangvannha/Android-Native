@@ -1,23 +1,27 @@
 package com.nhvn.todoandroidnative.data.repositories
 
+import android.util.Log
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.PagingSource
 import com.nhvn.todoandroidnative.data.datasources.TodosLocalDataSource
 import com.nhvn.todoandroidnative.data.datasources.TodosRemoteDataSource
 import com.nhvn.todoandroidnative.data.datasources.models.Todo
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 
 abstract class AbstractTodosRepository() {
     abstract suspend fun getTodos(): List<Todo>
+    abstract suspend fun getTodosByPage(): List<Todo>
     abstract val allTodos: Flow<List<Todo>>
     abstract suspend fun insert(todo: Todo): Unit
+    abstract val todoPager: Pager<Int, Todo>
 }
 
 class TodosRepository(
     private val todosRemoteDataSource: TodosRemoteDataSource, // network
     private val todosLocalDataSource: TodosLocalDataSource, // database
+    private val todoPagingSource: PagingSource<Int, Todo>,
 //// This could be CoroutineScope(SupervisorJob() + Dispatchers.Default).
 //    private val externalScope: CoroutineScope
 ) : AbstractTodosRepository() {
@@ -53,7 +57,23 @@ class TodosRepository(
         return todosLocalDataSource.getTodos();
     }
 
+    override suspend fun getTodosByPage(): List<Todo> {
+        val todos = todosLocalDataSource.getTodosByPage();
+        Log.i("getTodosByPage", "todos.toString()");
+        Log.i("getTodosByPage", todos.toString());
+        return todos;
+    }
+
     override val allTodos: Flow<List<Todo>> = todosLocalDataSource.allTodos
 
     override suspend fun insert(todo: Todo) = todosLocalDataSource.insert(todo)
+
+    override val todoPager: Pager<Int, Todo> =
+        Pager<Int, Todo>(PagingConfig(pageSize = 6)) {
+            todoPagingSource
+        };
+
+    companion object {
+        const val NETWORK_PAGE_SIZE = 50
+    }
 }

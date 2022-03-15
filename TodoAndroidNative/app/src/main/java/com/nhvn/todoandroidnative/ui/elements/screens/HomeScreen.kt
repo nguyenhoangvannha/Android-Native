@@ -28,6 +28,7 @@ import com.nhvn.todoandroidnative.ui.elements.theme.TodoAndroidNativeTheme
 import com.nhvn.todoandroidnative.ui.stateholders.viewmodel.TodoViewModel
 import com.nhvn.todoandroidnative.ui.elements.widgets.EditTodo
 import com.nhvn.todoandroidnative.ui.elements.widgets.ListTodo
+import com.nhvn.todoandroidnative.ui.elements.widgets.UserInfoList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -100,12 +101,9 @@ fun HomeScreen(
             ) {
                 Box(modifier = Modifier.weight(1F)) {
                     when (selectedTabIndex) {
-                        0 -> ListTodo(
-                            todos = todos,
+                        0 -> UserInfoList(
                             modifier = Modifier.padding(16.dp),
-                            onNewTodoWorkingStateSelected = { todo, newState ->
-                                //todoViewModel.changeTodoWorkingState(todo, newState)
-                            }
+                            userList = todoViewModel.todoPagingData,
                         )
                         1 -> ListTodo(
                             todos = todos

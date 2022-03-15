@@ -9,6 +9,9 @@ interface TodoDao {
     @Query("SELECT * FROM todo_table")
     fun getAll(): List<Todo>
 
+    @Query("SELECT * FROM todo_table LIMIT 10 OFFSET 1")
+    fun getByPage(): List<Todo>
+
     @Query("SELECT * FROM todo_table ORDER BY title ASC")
     fun getAlphabetizedTodos(): Flow<List<Todo>>
 
