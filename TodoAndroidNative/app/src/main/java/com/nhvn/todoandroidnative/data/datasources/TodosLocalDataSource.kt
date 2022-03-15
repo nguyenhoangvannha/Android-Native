@@ -14,8 +14,8 @@ class TodosLocalDataSource(
         return todoDao.getAll();
     }
 
-    override suspend fun getTodosByPage(): List<Todo> {
-        return todoDao.getByPage();
+    override suspend fun getTodosByPage(limit: Int, offset: Int): List<Todo> {
+        return todoDao.getByPage(limit = limit, offset = offset);
     }
 
     override val allTodos: Flow<List<Todo>> = todoDao.getAlphabetizedTodos()

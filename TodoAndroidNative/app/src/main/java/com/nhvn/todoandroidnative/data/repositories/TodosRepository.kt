@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 
 abstract class AbstractTodosRepository() {
     abstract suspend fun getTodos(): List<Todo>
-    abstract suspend fun getTodosByPage(): List<Todo>
+    abstract suspend fun getTodosByPage(limit: Int = 7, offset: Int): List<Todo>
     abstract val allTodos: Flow<List<Todo>>
     abstract suspend fun insert(todo: Todo): Unit
     abstract val todoPager: Pager<Int, Todo>
@@ -57,8 +57,8 @@ class TodosRepository(
         return todosLocalDataSource.getTodos();
     }
 
-    override suspend fun getTodosByPage(): List<Todo> {
-        val todos = todosLocalDataSource.getTodosByPage();
+    override suspend fun getTodosByPage(limit: Int, offset: Int): List<Todo> {
+        val todos = todosLocalDataSource.getTodosByPage(limit = limit, offset = offset);
         Log.i("getTodosByPage", "todos.toString()");
         Log.i("getTodosByPage", todos.toString());
         return todos;

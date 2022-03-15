@@ -13,11 +13,11 @@ class TodoPagingSource(
         try {
             // Start refresh at page 1 if undefined.
             val nextPageNumber = params.key ?: 1
-            val response = dataSource.getTodosByPage()
+            val response = dataSource.getTodosByPage(limit = 7, offset = ((nextPageNumber - 1) * 7))
             return LoadResult.Page<Int, Todo>(
                 data = response,
                 prevKey = null, // Only paging forward.
-                nextKey = nextPageNumber
+                nextKey = if (response.isEmpty()) null else nextPageNumber + 1
             )
         } catch (e: Exception) {
             // Handle errors in this block and return LoadResult.Error if it is an

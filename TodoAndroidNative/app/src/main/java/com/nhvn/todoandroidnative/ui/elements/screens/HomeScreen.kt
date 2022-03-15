@@ -101,17 +101,16 @@ fun HomeScreen(
             ) {
                 Box(modifier = Modifier.weight(1F)) {
                     when (selectedTabIndex) {
-                        0 -> UserInfoList(
-                            modifier = Modifier.padding(16.dp),
-                            userList = todoViewModel.todoPagingData,
-                        )
-                        1 -> ListTodo(
-                            todos = todos
-                                .filter { it.state == TodoWorkingStateEnum.inprocess },
+                        0 -> ListTodo(
+                            todos = todos,
                             modifier = Modifier.padding(16.dp),
                             onNewTodoWorkingStateSelected = { todo, newState ->
                                 // todoViewModel.changeTodoWorkingState(todo, newState)
                             }
+                        )
+                        1 -> UserInfoList(
+                            modifier = Modifier.padding(16.dp),
+                            userList = todoViewModel.todoPagingData,
                         )
                         2 -> ListTodo(
                             todos = todos
