@@ -14,15 +14,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.nhvn.todoandroidnative.data.datasources.models.Todo
 import com.nhvn.todoandroidnative.data.datasources.models.TodoWorkingStateEnum
-import com.nhvn.todoandroidnative.ui.elements.navigation.Routes
 import com.nhvn.todoandroidnative.ui.stateholders.state.rememberMyAppState
 import com.nhvn.todoandroidnative.ui.elements.theme.TodoAndroidNativeTheme
 import com.nhvn.todoandroidnative.ui.stateholders.viewmodel.TodoViewModel
@@ -110,7 +103,7 @@ fun HomeScreen(
                         )
                         1 -> UserInfoList(
                             modifier = Modifier.padding(16.dp),
-                            userList = todoViewModel.todoPagingData,
+                            todoViewModel = todoViewModel,
                         )
                         2 -> ListTodo(
                             todos = todos

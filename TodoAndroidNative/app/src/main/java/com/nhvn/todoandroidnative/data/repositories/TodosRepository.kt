@@ -13,9 +13,10 @@ import kotlinx.coroutines.flow.Flow
 abstract class AbstractTodosRepository() {
     abstract suspend fun getTodos(): List<Todo>
     abstract suspend fun getTodosByPage(limit: Int = 7, offset: Int): List<Todo>
+    abstract fun getTodosByPage(): Flow<PagingData<Todo>>
     abstract val allTodos: Flow<List<Todo>>
     abstract suspend fun insert(todo: Todo): Unit
-    abstract val todoPager: Pager<Int, Todo>
+    //abstract val todoPager: Pager<Int, Todo>
 }
 
 class TodosRepository(
@@ -64,14 +65,20 @@ class TodosRepository(
         return todos;
     }
 
+    override fun getTodosByPage(): Flow<PagingData<Todo>> {
+        return Pager<Int, Todo>(PagingConfig(pageSize = 6)) {
+            todoPagingSource
+        }.flow
+    }
+
     override val allTodos: Flow<List<Todo>> = todosLocalDataSource.allTodos
 
     override suspend fun insert(todo: Todo) = todosLocalDataSource.insert(todo)
-
-    override val todoPager: Pager<Int, Todo> =
-        Pager<Int, Todo>(PagingConfig(pageSize = 6)) {
-            todoPagingSource
-        };
+//
+//    override val todoPager: Pager<Int, Todo> =
+//        Pager<Int, Todo>(PagingConfig(pageSize = 6)) {
+//            todoPagingSource
+//        };
 
     companion object {
         const val NETWORK_PAGE_SIZE = 50

@@ -19,8 +19,12 @@ class TodoViewModel(private val todoRepository: TodosRepository) : ViewModel() {
         todoRepository.insert(todo)
     }
 
-    val todoPagingData: Flow<PagingData<Todo>> =
-        todoRepository.todoPager.flow.cachedIn(viewModelScope)
+//    val todoPagingData: Flow<PagingData<Todo>> =
+//        todoRepository.todoPager.flow.cachedIn(viewModelScope)
+
+    fun getTodosByPage(): Flow<PagingData<Todo>> {
+        return todoRepository.getTodosByPage().cachedIn(viewModelScope)
+    }
 
 }
 

@@ -14,11 +14,14 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.nhvn.todoandroidnative.data.datasources.models.Todo
+import com.nhvn.todoandroidnative.ui.stateholders.viewmodel.TodoViewModel
 import kotlinx.coroutines.flow.Flow
 
 @Composable
-fun UserInfoList(modifier: Modifier, userList: Flow<PagingData<Todo>>) {
-    val userListItems: LazyPagingItems<Todo> = userList.collectAsLazyPagingItems()
+fun UserInfoList(modifier: Modifier, todoViewModel: TodoViewModel) {
+    val userListItems: LazyPagingItems<Todo> =
+        todoViewModel.getTodosByPage().collectAsLazyPagingItems()
+    print("userListItems $userListItems")
     LazyColumn {
         items(userListItems.itemCount) { index ->
             TodoCard(todo = userListItems[index]!!)

@@ -1,5 +1,6 @@
 package com.nhvn.todoandroidnative.data.datasources.paging
 
+import android.util.Log
 import androidx.paging.*
 import com.nhvn.todoandroidnative.data.datasources.TodosLocalDataSource
 import com.nhvn.todoandroidnative.data.datasources.models.Todo
@@ -11,10 +12,13 @@ class TodoPagingSource(
         params: LoadParams<Int>
     ): LoadResult<Int, Todo> {
         try {
+            Log.i("load", "load");
             // Start refresh at page 1 if undefined.
             val nextPageNumber = params.key ?: 1
             val response = dataSource.getTodosByPage(limit = 7, offset = ((nextPageNumber - 1) * 7))
-            return LoadResult.Page<Int, Todo>(
+            Log.i("load response", "$response");
+
+            return LoadResult.Page(
                 data = response,
                 prevKey = null, // Only paging forward.
                 nextKey = if (response.isEmpty()) null else nextPageNumber + 1
@@ -22,7 +26,7 @@ class TodoPagingSource(
         } catch (e: Exception) {
             // Handle errors in this block and return LoadResult.Error if it is an
             // expected error (such as a network failure).
-
+            Log.i("load error", "$e");
             return LoadResult.Error(e);
         }
     }
