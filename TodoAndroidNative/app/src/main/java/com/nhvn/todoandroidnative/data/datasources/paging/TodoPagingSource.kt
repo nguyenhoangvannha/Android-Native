@@ -12,9 +12,10 @@ class TodoPagingSource(
         params: LoadParams<Int>
     ): LoadResult<Int, Todo> {
         try {
-            Log.i("load", "load");
             // Start refresh at page 1 if undefined.
             val nextPageNumber = params.key ?: 1
+            Log.i("load", "$nextPageNumber");
+
             val response = dataSource.getTodosByPage(limit = 7, offset = ((nextPageNumber - 1) * 7))
             Log.i("load response", "$response");
 

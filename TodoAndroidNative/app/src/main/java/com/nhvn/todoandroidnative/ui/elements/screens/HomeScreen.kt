@@ -63,12 +63,14 @@ fun HomeScreen(
                             }
                         },
                         actions = {
+                            Text(text = "Pref")
                             Switch(
                                 checked = darkModeState.value,
                                 onCheckedChange = {
                                     todoViewModel.setDarkMode(it)
                                 },
                             )
+                            Text(text = "Proto")
                             Switch(
                                 checked = userPreferencesState.value.darkMode,
                                 onCheckedChange = {

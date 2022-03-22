@@ -1,5 +1,6 @@
 package com.nhvn.todoandroidnative.data.datasources
 
+import android.util.Log
 import androidx.annotation.WorkerThread
 import androidx.paging.Pager
 import androidx.paging.PagingData
@@ -11,11 +12,11 @@ import kotlinx.coroutines.flow.Flow
 class TodosLocalDataSource(
     private val todoDao: TodoDao
 ) {
-    suspend fun getTodos(): List<Todo> {
+    fun getTodos(): List<Todo> {
         return todoDao.getAll();
     }
 
-    suspend fun getTodosByPage(limit: Int, offset: Int): List<Todo> {
+    fun getTodosByPage(limit: Int, offset: Int): List<Todo> {
         return todoDao.getByPage(limit = limit, offset = offset);
     }
 
