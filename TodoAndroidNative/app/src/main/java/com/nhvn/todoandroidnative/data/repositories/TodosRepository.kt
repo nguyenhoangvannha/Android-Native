@@ -1,14 +1,20 @@
 package com.nhvn.todoandroidnative.data.repositories
 
 import android.util.Log
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import com.nhvn.todoandroidnative.data.datasources.TodosLocalDataSource
 import com.nhvn.todoandroidnative.data.datasources.TodosRemoteDataSource
+import com.nhvn.todoandroidnative.data.datasources.datastore.PreferencesKeys
 import com.nhvn.todoandroidnative.data.datasources.models.Todo
+import com.nhvn.todoandroidnative.data.datasources.models.UserPreferences
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 abstract class AbstractTodosRepository() {
     abstract suspend fun getTodos(): List<Todo>
@@ -16,13 +22,18 @@ abstract class AbstractTodosRepository() {
     abstract fun getTodosByPage(): Flow<PagingData<Todo>>
     abstract val allTodos: Flow<List<Todo>>
     abstract suspend fun insert(todo: Todo): Unit
+
     //abstract val todoPager: Pager<Int, Todo>
+    abstract fun darkMode(): Flow<Boolean>
+
+    abstract suspend fun setDarkMode(darkMode: Boolean)
 }
 
 class TodosRepository(
     private val todosRemoteDataSource: TodosRemoteDataSource, // network
     private val todosLocalDataSource: TodosLocalDataSource, // database
     private val todoPagingSource: PagingSource<Int, Todo>,
+    private val userPreferencesStore: DataStore<Preferences>,
 //// This could be CoroutineScope(SupervisorJob() + Dispatchers.Default).
 //    private val externalScope: CoroutineScope
 ) : AbstractTodosRepository() {
@@ -74,6 +85,18 @@ class TodosRepository(
     override val allTodos: Flow<List<Todo>> = todosLocalDataSource.allTodos
 
     override suspend fun insert(todo: Todo) = todosLocalDataSource.insert(todo)
+
+    override fun darkMode(): Flow<Boolean> {
+        return userPreferencesStore.data.map { preferences ->
+            preferences[PreferencesKeys.DARK_MODE] ?: false
+        }
+    }
+
+    override suspend fun setDarkMode(darkMode: Boolean) {
+        userPreferencesStore.edit { settings ->
+            settings[PreferencesKeys.DARK_MODE] = darkMode
+        }
+    }
 //
 //    override val todoPager: Pager<Int, Todo> =
 //        Pager<Int, Todo>(PagingConfig(pageSize = 6)) {

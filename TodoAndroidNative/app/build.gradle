@@ -140,4 +140,6 @@ dependencies {
 
     // optional - Jetpack Compose integration
     implementation "androidx.paging:paging-compose:1.0.0-alpha14"
+
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
 }

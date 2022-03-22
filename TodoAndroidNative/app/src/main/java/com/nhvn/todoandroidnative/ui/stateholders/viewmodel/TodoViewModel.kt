@@ -6,6 +6,7 @@ import androidx.paging.cachedIn
 import com.nhvn.todoandroidnative.data.datasources.models.Todo
 import com.nhvn.todoandroidnative.data.repositories.TodosRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class TodoViewModel(private val todoRepository: TodosRepository) : ViewModel() {
@@ -26,6 +27,13 @@ class TodoViewModel(private val todoRepository: TodosRepository) : ViewModel() {
         return todoRepository.getTodosByPage().cachedIn(viewModelScope)
     }
 
+    fun darkMode(): Flow<Boolean> {
+        return todoRepository.darkMode()
+    }
+
+    fun setDarkMode(darkMode: Boolean) = viewModelScope.launch {
+        todoRepository.setDarkMode(darkMode = darkMode)
+    }
 }
 
 class TodoViewModelFactory(private val repository: TodosRepository) : ViewModelProvider.Factory {

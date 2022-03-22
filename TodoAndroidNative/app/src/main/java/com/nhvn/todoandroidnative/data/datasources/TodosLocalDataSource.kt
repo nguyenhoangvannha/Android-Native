@@ -10,29 +10,27 @@ import kotlinx.coroutines.flow.Flow
 
 class TodosLocalDataSource(
     private val todoDao: TodoDao
-) : AbstractTodosRepository() {
-    override suspend fun getTodos(): List<Todo> {
+) {
+    suspend fun getTodos(): List<Todo> {
         return todoDao.getAll();
     }
 
-    override suspend fun getTodosByPage(limit: Int, offset: Int): List<Todo> {
+    suspend fun getTodosByPage(limit: Int, offset: Int): List<Todo> {
         return todoDao.getByPage(limit = limit, offset = offset);
     }
 
-    override fun getTodosByPage(): Flow<PagingData<Todo>> {
-        TODO("Not yet implemented")
-    }
 
-    override val allTodos: Flow<List<Todo>> = todoDao.getAlphabetizedTodos()
+    val allTodos: Flow<List<Todo>> = todoDao.getAlphabetizedTodos()
 
     // By default Room runs suspend queries off the main thread, therefore, we don't need to
     // implement anything else to ensure we're not doing long running database work
     // off the main thread.
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    override suspend fun insert(todo: Todo) {
+    suspend fun insert(todo: Todo) {
         todoDao.insert(todo)
     }
+
 //
 //    override val todoPager: Pager<Int, Todo>
 //        get() = TODO("Not yet implemented")

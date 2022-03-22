@@ -1,6 +1,7 @@
 package com.nhvn.todoandroidnative.ui.elements.screens
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Switch
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.icons.Icons
@@ -32,6 +33,7 @@ fun HomeScreen(
 
     val state = todoViewModel.allWords.observeAsState(initial = emptyList())
     val todos = state.value
+    val darkModeState = todoViewModel.darkMode().collectAsState(initial = false)
 
     val myAppState = rememberMyAppState()
 
@@ -63,6 +65,9 @@ fun HomeScreen(
                                     contentDescription = "Localized description"
                                 )
                             }
+                            Switch(checked = darkModeState.value, onCheckedChange = {
+                                todoViewModel.setDarkMode(it)
+                            })
                         }
                     )
 

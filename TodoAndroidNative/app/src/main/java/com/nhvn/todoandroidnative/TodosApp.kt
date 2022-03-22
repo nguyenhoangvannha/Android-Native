@@ -5,6 +5,7 @@ import com.nhvn.todoandroidnative.data.datasources.AppDatabase
 import com.nhvn.todoandroidnative.data.datasources.TodosApiImpl
 import com.nhvn.todoandroidnative.data.datasources.TodosLocalDataSource
 import com.nhvn.todoandroidnative.data.datasources.TodosRemoteDataSource
+import com.nhvn.todoandroidnative.data.datasources.datastore.dataStore
 import com.nhvn.todoandroidnative.data.datasources.paging.TodoPagingSource
 import com.nhvn.todoandroidnative.data.repositories.TodosRepository
 import kotlinx.coroutines.CoroutineScope
@@ -25,6 +26,7 @@ class TodosApp : Application() {
             TodosRemoteDataSource(TodosApiImpl()),
             todosLocalDataSource,
             TodoPagingSource(todosLocalDataSource),
+            dataStore
         )
     }
 }
