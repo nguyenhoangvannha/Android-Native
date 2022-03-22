@@ -16,6 +16,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.codelab.android.datastore.UserPreferences
 import com.nhvn.todoandroidnative.data.datasources.models.TodoWorkingStateEnum
 import com.nhvn.todoandroidnative.ui.stateholders.state.rememberMyAppState
 import com.nhvn.todoandroidnative.ui.elements.theme.TodoAndroidNativeTheme
@@ -34,6 +35,9 @@ fun HomeScreen(
     val state = todoViewModel.allWords.observeAsState(initial = emptyList())
     val todos = state.value
     val darkModeState = todoViewModel.darkMode().collectAsState(initial = false)
+
+    val userPreferencesState = todoViewModel.userPreferences()
+        .collectAsState(initial = UserPreferences.getDefaultInstance())
 
     val myAppState = rememberMyAppState()
 
@@ -59,15 +63,18 @@ fun HomeScreen(
                             }
                         },
                         actions = {
-                            IconButton(onClick = { /* doSomething() */ }) {
-                                Icon(
-                                    imageVector = Icons.Filled.Favorite,
-                                    contentDescription = "Localized description"
-                                )
-                            }
-                            Switch(checked = darkModeState.value, onCheckedChange = {
-                                todoViewModel.setDarkMode(it)
-                            })
+                            Switch(
+                                checked = darkModeState.value,
+                                onCheckedChange = {
+                                    todoViewModel.setDarkMode(it)
+                                },
+                            )
+                            Switch(
+                                checked = userPreferencesState.value.darkMode,
+                                onCheckedChange = {
+                                    todoViewModel.setDarkModeProtoStore(it)
+                                },
+                            )
                         }
                     )
 

@@ -1,9 +1,12 @@
 package com.nhvn.todoandroidnative.data.datasources.datastore
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.dataStore
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.codelab.android.datastore.UserPreferences
 
 private const val USER_PREFERENCES_NAME = "user_preferences"
 
@@ -15,9 +18,10 @@ object PreferencesKeys {
     val DARK_MODE = booleanPreferencesKey("dark_mode")
 }
 
-//val userPreferencesFlow: Flow<UserPreferences> = dataStore.data
-//    .map { preferences ->
-//        // Get our show completed value, defaulting to false if not set:
-//        val showCompleted = preferences[PreferencesKeys.SHOW_COMPLETED]?: false
-//        UserPreferences(showCompleted)
-//    }
+//private const val USER_PREFERENCES_NAME = "user_preferences"
+private const val DATA_STORE_FILE_NAME = "user_prefs.pb"
+
+val Context.userPreferencesStore: DataStore<UserPreferences> by dataStore(
+    fileName = DATA_STORE_FILE_NAME,
+    serializer = UserPreferencesSerializer
+)

@@ -3,6 +3,7 @@ package com.nhvn.todoandroidnative.ui.stateholders.viewmodel
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.codelab.android.datastore.UserPreferences
 import com.nhvn.todoandroidnative.data.datasources.models.Todo
 import com.nhvn.todoandroidnative.data.repositories.TodosRepository
 import kotlinx.coroutines.flow.Flow
@@ -33,6 +34,14 @@ class TodoViewModel(private val todoRepository: TodosRepository) : ViewModel() {
 
     fun setDarkMode(darkMode: Boolean) = viewModelScope.launch {
         todoRepository.setDarkMode(darkMode = darkMode)
+    }
+
+    fun userPreferences(): Flow<UserPreferences> {
+        return todoRepository.userPreferencesFlow()
+    }
+
+    fun setDarkModeProtoStore(darkMode: Boolean) = viewModelScope.launch {
+        todoRepository.setDarkModeProtoStore(darkMode = darkMode)
     }
 }
 

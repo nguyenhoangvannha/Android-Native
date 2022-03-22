@@ -8,13 +8,15 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
+import com.codelab.android.datastore.UserPreferences
 import com.nhvn.todoandroidnative.data.datasources.TodosLocalDataSource
 import com.nhvn.todoandroidnative.data.datasources.TodosRemoteDataSource
 import com.nhvn.todoandroidnative.data.datasources.datastore.PreferencesKeys
 import com.nhvn.todoandroidnative.data.datasources.models.Todo
-import com.nhvn.todoandroidnative.data.datasources.models.UserPreferences
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import java.io.IOException
 
 abstract class AbstractTodosRepository() {
     abstract suspend fun getTodos(): List<Todo>
@@ -27,6 +29,9 @@ abstract class AbstractTodosRepository() {
     abstract fun darkMode(): Flow<Boolean>
 
     abstract suspend fun setDarkMode(darkMode: Boolean)
+    abstract fun userPreferencesFlow(): Flow<UserPreferences>
+
+    abstract suspend fun setDarkModeProtoStore(darkMode: Boolean)
 }
 
 class TodosRepository(
@@ -34,6 +39,7 @@ class TodosRepository(
     private val todosLocalDataSource: TodosLocalDataSource, // database
     private val todoPagingSource: PagingSource<Int, Todo>,
     private val userPreferencesStore: DataStore<Preferences>,
+    private val userPreferencesProtoStore: DataStore<UserPreferences>,
 //// This could be CoroutineScope(SupervisorJob() + Dispatchers.Default).
 //    private val externalScope: CoroutineScope
 ) : AbstractTodosRepository() {
@@ -95,6 +101,25 @@ class TodosRepository(
     override suspend fun setDarkMode(darkMode: Boolean) {
         userPreferencesStore.edit { settings ->
             settings[PreferencesKeys.DARK_MODE] = darkMode
+        }
+    }
+
+    override fun userPreferencesFlow(): Flow<UserPreferences> {
+        return userPreferencesProtoStore.data
+            .catch { exception ->
+                // dataStore.data throws an IOException when an error is encountered when reading data
+                if (exception is IOException) {
+                    Log.e("Error", "Error reading sort order preferences.", exception)
+                    emit(UserPreferences.getDefaultInstance())
+                } else {
+                    throw exception
+                }
+            }
+    }
+
+    override suspend fun setDarkModeProtoStore(darkMode: Boolean) {
+        userPreferencesProtoStore.updateData { preferences ->
+            preferences.toBuilder().setDarkMode(darkMode).build()
         }
     }
 //
