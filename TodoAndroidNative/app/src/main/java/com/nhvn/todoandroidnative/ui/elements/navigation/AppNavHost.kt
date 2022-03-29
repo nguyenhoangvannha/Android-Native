@@ -12,18 +12,17 @@ import com.nhvn.todoandroidnative.ui.stateholders.viewmodel.TodoViewModel
 fun AppNavHost(
     navController: NavHostController,
     startDestination: String = Routes.homeScreen,
-    todoViewModel: TodoViewModel,
+    todoViewModel: TodoViewModel
 ) {
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
-//        composable(Routes.homeScreen) {
-//            HomeScreen(//navController,
-//                todoViewModel = todoViewModel,
-//                todos = todos
-//            )
-//        }
+        composable(Routes.homeScreen) {
+            HomeScreen(//navController,
+                todoViewModel = todoViewModel
+            )
+        }
         composable(Routes.editTodoScreen) {
             EditTodoScreen(navController)
         }

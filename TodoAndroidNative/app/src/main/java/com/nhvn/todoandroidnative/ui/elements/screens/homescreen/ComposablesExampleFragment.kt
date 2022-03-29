@@ -14,8 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.viewModels
 import com.nhvn.todoandroidnative.ui.elements.USERNOTE_STATE_KEY
-import com.nhvn.todoandroidnative.ui.MyApp
-import com.nhvn.todoandroidnative.ui.elements.MainActivity
+import com.nhvn.todoandroidnative.ui.elements.MyApp
 import com.nhvn.todoandroidnative.ui.stateholders.viewmodel.TodoViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -59,7 +58,7 @@ class ComposablesExampleFragment : Fragment() {
             setContent {
                 val (title, setTitle) = remember { mutableStateOf(if (userNote != null) userNote else "") }
                 Column() {
-                    MyApp(modifier = Modifier.weight(1F), todoViewModel = viewModel)
+                    MyApp(todoViewModel = viewModel)
                     TextField(value = title!!, onValueChange = {
                         setTitle(it)
                         userNote = it

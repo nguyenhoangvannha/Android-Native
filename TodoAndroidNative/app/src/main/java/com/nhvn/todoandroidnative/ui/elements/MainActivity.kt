@@ -6,7 +6,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.nhvn.todoandroidnative.TodosApp
 import com.nhvn.todoandroidnative.ui.elements.observers.MyActivityLifecycleObserver
-import com.nhvn.todoandroidnative.ui.elements.screens.HomeScreen
 import com.nhvn.todoandroidnative.ui.stateholders.viewmodel.TodoViewModel
 import com.nhvn.todoandroidnative.ui.stateholders.viewmodel.TodoViewModelFactory
 
@@ -25,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         lifecycle.addObserver(MyActivityLifecycleObserver(lifecycle))
 
         setContent {
-            HomeScreen(todoViewModel = viewModel);
+            MyApp(todoViewModel = viewModel);
         }
     }
 
