@@ -146,6 +146,11 @@ dependencies {
 
     implementation  "androidx.datastore:datastore-core:1.0.0"
     implementation  "com.google.protobuf:protobuf-javalite:3.18.0"
+
+    def work_version = "2.7.1"
+
+    // Kotlin + coroutines
+    implementation "androidx.work:work-runtime-ktx:$work_version"
 }
 
 protobuf {
