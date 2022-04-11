@@ -6,16 +6,17 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 
-private val KEY: String = "WORK_RESULT";
+val WORK_CHAIN_DATA_KEY: String = "WORK_CHAIN_DATA_KEY";
 
 class Worker1(appContext: Context, workerParams: WorkerParameters) :
     Worker(appContext, workerParams) {
     override fun doWork(): Result {
+        val input = inputData.getString(WORK_CHAIN_DATA_KEY)
         val value1 = "A"
         val value2 = "B"
         return try {
-            val result = value1 + value2
-            val data = workDataOf(Pair(KEY, result))
+            val result = input + value1 + value2
+            val data = workDataOf(Pair(WORK_CHAIN_DATA_KEY, result))
             Result.success(data)
         } catch (error: Error) {
             Result.failure()
@@ -27,12 +28,12 @@ class Worker1(appContext: Context, workerParams: WorkerParameters) :
 class Worker2(appContext: Context, workerParams: WorkerParameters) :
     Worker(appContext, workerParams) {
     override fun doWork(): Result {
-        val input = inputData.getString(KEY)
+        val input = inputData.getString(WORK_CHAIN_DATA_KEY)
         val value1 = "C"
         val value2 = "D"
         return try {
             val result = input + value1 + value2
-            val data = workDataOf(Pair(KEY, result))
+            val data = workDataOf(Pair(WORK_CHAIN_DATA_KEY, result))
             Result.success(data)
         } catch (error: Error) {
             Result.failure()
@@ -44,7 +45,7 @@ class Worker2(appContext: Context, workerParams: WorkerParameters) :
 class Worker3(appContext: Context, workerParams: WorkerParameters) :
     Worker(appContext, workerParams) {
     override fun doWork(): Result {
-        val input = inputData.getString(KEY)
+        val input = inputData.getString(WORK_CHAIN_DATA_KEY)
         val value1 = "E"
         val value2 = "F"
         return try {
@@ -52,7 +53,7 @@ class Worker3(appContext: Context, workerParams: WorkerParameters) :
 
             Log.i("Work chain result", result)
 
-            val data = workDataOf(Pair(KEY, result))
+            val data = workDataOf(Pair(WORK_CHAIN_DATA_KEY, result))
             Result.success(data)
         } catch (error: Error) {
             Result.failure()
