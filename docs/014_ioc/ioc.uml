@@ -1,0 +1,26 @@
+@startuml
+class ClassA {
+  InterfaceD objectD
+}
+
+interface InterfaceD {
+doX()
+}
+
+
+InterfaceD --> ClassA::objectD : loosely coupled
+
+class ClassB implements InterfaceD{
+doX()
+}
+
+class ClassC implements InterfaceD{
+doX()
+}
+
+together {
+    class ClassB
+    class ClassC
+}
+
+@enduml

@@ -3,11 +3,16 @@ package com.nhvn.todoandroidnative.ui.stateholders.viewmodel
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import androidx.work.OneTimeWorkRequest
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.codelab.android.datastore.UserPreferences
 import com.nhvn.todoandroidnative.data.datasources.models.Todo
 import com.nhvn.todoandroidnative.data.repositories.TodosRepository
+import com.nhvn.todoandroidnative.data.work.Worker1
+import com.nhvn.todoandroidnative.data.work.Worker2
+import com.nhvn.todoandroidnative.data.work.Worker3
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class TodoViewModel(private val todoRepository: TodosRepository) : ViewModel() {
@@ -42,6 +47,10 @@ class TodoViewModel(private val todoRepository: TodosRepository) : ViewModel() {
 
     fun setDarkModeProtoStore(darkMode: Boolean) = viewModelScope.launch {
         todoRepository.setDarkModeProtoStore(darkMode = darkMode)
+    }
+
+    fun doAWorkChain() {
+        todoRepository.doAWorkChain()
     }
 }
 

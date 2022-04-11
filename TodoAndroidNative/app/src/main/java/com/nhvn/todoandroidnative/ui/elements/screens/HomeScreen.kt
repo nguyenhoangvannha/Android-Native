@@ -16,8 +16,10 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.codelab.android.datastore.UserPreferences
 import com.nhvn.todoandroidnative.data.datasources.models.TodoWorkingStateEnum
+import com.nhvn.todoandroidnative.ui.elements.navigation.Routes
 import com.nhvn.todoandroidnative.ui.stateholders.state.rememberMyAppState
 import com.nhvn.todoandroidnative.ui.elements.theme.TodoAndroidNativeTheme
 import com.nhvn.todoandroidnative.ui.stateholders.viewmodel.TodoViewModel
@@ -28,7 +30,7 @@ import com.nhvn.todoandroidnative.ui.elements.widgets.UserInfoList
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-//    navController: NavController,
+    navController: NavController,
     todoViewModel: TodoViewModel
 ) {
 
@@ -95,7 +97,7 @@ fun HomeScreen(
             floatingActionButton = {
                 if (myAppState.shouldShowAddTodoFloatingActionButton) {
                     FloatingActionButton(onClick = {
-//                        navController.navigate(Routes.editTodoScreen)
+                        navController.navigate(Routes.featuresScreen)
                     }) {
                         Icon(Icons.Rounded.Add, contentDescription = "Localized description")
                     }

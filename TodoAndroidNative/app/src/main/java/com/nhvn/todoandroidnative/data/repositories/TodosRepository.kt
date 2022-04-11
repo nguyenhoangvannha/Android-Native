@@ -8,11 +8,19 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
+import androidx.work.OneTimeWorkRequest
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import com.codelab.android.datastore.UserPreferences
 import com.nhvn.todoandroidnative.data.datasources.TodosLocalDataSource
 import com.nhvn.todoandroidnative.data.datasources.TodosRemoteDataSource
 import com.nhvn.todoandroidnative.data.datasources.datastore.PreferencesKeys
 import com.nhvn.todoandroidnative.data.datasources.models.Todo
+import com.nhvn.todoandroidnative.data.work.WORK_CHAIN_DATA_KEY
+import com.nhvn.todoandroidnative.data.work.Worker1
+import com.nhvn.todoandroidnative.data.work.Worker2
+import com.nhvn.todoandroidnative.data.work.Worker3
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -32,6 +40,7 @@ abstract class AbstractTodosRepository() {
     abstract fun userPreferencesFlow(): Flow<UserPreferences>
 
     abstract suspend fun setDarkModeProtoStore(darkMode: Boolean)
+    abstract fun doAWorkChain()
 }
 
 class TodosRepository(
@@ -121,6 +130,28 @@ class TodosRepository(
         userPreferencesProtoStore.updateData { preferences ->
             preferences.toBuilder().setDarkMode(darkMode).build()
         }
+    }
+
+    override fun doAWorkChain() {
+        val worker1: OneTimeWorkRequest =
+            OneTimeWorkRequestBuilder<Worker1>()
+                .setInputData(workDataOf(Pair(WORK_CHAIN_DATA_KEY, "Input data 0 ")))
+                .build()
+
+        val worker2: OneTimeWorkRequest =
+            OneTimeWorkRequestBuilder<Worker2>()
+                .build()
+
+        val worker3: OneTimeWorkRequest =
+            OneTimeWorkRequestBuilder<Worker3>()
+                .build()
+
+        WorkManager
+            .getInstance()
+            .beginWith(worker1)
+            .then(worker2)
+            .then(worker3)
+            .enqueue()
     }
 //
 //    override val todoPager: Pager<Int, Todo> =
