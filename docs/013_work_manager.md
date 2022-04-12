@@ -13,6 +13,11 @@
 |Long Running| One time or periodic| Any WorkRequest or Worker. Call setForeground() in the Worker to handle the notification.|
 |Deferrable| One time or periodic| PeriodicWorkRequest and Worker.|
 
+### One-time work flow
+![one-time-work-flow](013_work_manager/one-time-work-flow.png)
+
+### Periodic work flow
+![periodic-work-states](013_work_manager/periodic-work-states.png)
 ## Feature
 
 | Name| What| Example|
@@ -25,6 +30,8 @@
 |Built-In threading interoperability| WorkManager integrates seamlessly with Coroutines and RxJava and provides the flexibility to plug in your own asynchronous APIs.| |
 |Use WorkManager for reliable work| WorkManager is intended for work that is required to run reliably| Make sure to complete work even the app exits, or the device restarts|
 
+### Chaining works
+![Chaining Work](013_work_manager/chaining-work.jpeg)
 ## Relationship to other APIs
 |API| Recommended for| Relationship to work manager|
 |-|-|-|

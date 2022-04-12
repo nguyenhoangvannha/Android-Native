@@ -43,6 +43,7 @@ abstract class AbstractTodosRepository() {
 
     abstract suspend fun setDarkModeProtoStore(darkMode: Boolean)
     abstract fun doAWorkChain()
+    abstract fun cancelWorkByTag(tag: String)
 }
 
 class TodosRepository(
@@ -134,19 +135,23 @@ class TodosRepository(
         }
     }
 
+    private val workManager =
+        WorkManager
+            .getInstance();
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun doAWorkChain() {
         val worker1: OneTimeWorkRequest =
             OneTimeWorkRequestBuilder<Worker1>()
                 .setInputData(workDataOf(Pair(WORK_CHAIN_DATA_KEY, "Input data 0 ")))
-                .addTag("doAWorkChain.worker1")
+                .addTag(WORKER1_TAG)
                 .addTag(WORK_CHAIN_TAG)
                 .setInitialDelay(Duration.ofSeconds(2))
                 .build()
 
         val worker2: OneTimeWorkRequest =
             OneTimeWorkRequestBuilder<Worker2>()
-                .addTag("doAWorkChain.worker2")
+                .addTag(WORKER2_TAG)
                 .addTag(WORK_CHAIN_TAG)
                 .setInitialDelay(Duration.ofSeconds(2))
                 .build()
@@ -157,13 +162,14 @@ class TodosRepository(
                 .addTag(WORK_CHAIN_TAG)
                 .setInitialDelay(Duration.ofSeconds(2))
                 .build()
-        val workManager =
-            WorkManager
-                .getInstance();
         workManager.beginWith(worker1)
             .then(worker2)
             .then(worker3)
             .enqueue()
+    }
+
+    override fun cancelWorkByTag(tag: String) {
+        workManager.cancelAllWorkByTag(tag)
     }
 //
 //    override val todoPager: Pager<Int, Todo> =
@@ -177,3 +183,5 @@ class TodosRepository(
 }
 
 val WORK_CHAIN_TAG = "doAWorkChain ${Date()}";
+val WORKER1_TAG = "doAWorkChain.worker1"
+val WORKER2_TAG = "doAWorkChain.worker2"

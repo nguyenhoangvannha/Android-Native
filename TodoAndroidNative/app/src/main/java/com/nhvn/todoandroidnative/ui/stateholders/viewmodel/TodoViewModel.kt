@@ -62,6 +62,10 @@ class TodoViewModel(private val todoRepository: TodosRepository) : ViewModel() {
     fun doAWorkChain() {
         todoRepository.doAWorkChain()
     }
+
+    fun cancelWorkerByTag(tag: String) {
+        todoRepository.cancelWorkByTag(tag)
+    }
 }
 
 class TodoViewModelFactory(private val repository: TodosRepository) : ViewModelProvider.Factory {

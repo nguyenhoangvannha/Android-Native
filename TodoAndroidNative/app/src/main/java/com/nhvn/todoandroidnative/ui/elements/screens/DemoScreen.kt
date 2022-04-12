@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Observer
 import androidx.work.*
+import com.nhvn.todoandroidnative.data.repositories.WORKER2_TAG
 import com.nhvn.todoandroidnative.ui.elements.theme.TodoAndroidNativeTheme
 import com.nhvn.todoandroidnative.ui.stateholders.viewmodel.TodoViewModel
 import com.nhvn.todoandroidnative.data.work.UploadWorker
@@ -94,6 +95,12 @@ fun DemoScreen(todoViewModel: TodoViewModel) {
                         }
                     }"
                 )
+
+                Button(onClick = {
+                    todoViewModel.cancelWorkerByTag(WORKER2_TAG)
+                }) {
+                    Text(text = "Cancel worker1")
+                }
             }
         }
     }
