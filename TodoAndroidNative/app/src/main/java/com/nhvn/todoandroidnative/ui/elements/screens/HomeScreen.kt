@@ -17,6 +17,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.work.WorkInfo
 import com.codelab.android.datastore.UserPreferences
 import com.nhvn.todoandroidnative.data.datasources.models.TodoWorkingStateEnum
 import com.nhvn.todoandroidnative.ui.elements.navigation.Routes
@@ -35,6 +36,7 @@ fun HomeScreen(
 ) {
 
     val state = todoViewModel.allWords.observeAsState(initial = emptyList())
+
     val todos = state.value
     val darkModeState = todoViewModel.darkMode().collectAsState(initial = false)
 

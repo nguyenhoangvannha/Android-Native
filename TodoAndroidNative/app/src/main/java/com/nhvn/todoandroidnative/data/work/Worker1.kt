@@ -12,8 +12,8 @@ class Worker1(appContext: Context, workerParams: WorkerParameters) :
     Worker(appContext, workerParams) {
     override fun doWork(): Result {
         val input = inputData.getString(WORK_CHAIN_DATA_KEY)
-        val value1 = "A"
-        val value2 = "B"
+        val value1 = "WorkManager"
+        val value2 = " is"
         return try {
             val result = input + value1 + value2
             val data = workDataOf(Pair(WORK_CHAIN_DATA_KEY, result))
@@ -29,8 +29,8 @@ class Worker2(appContext: Context, workerParams: WorkerParameters) :
     Worker(appContext, workerParams) {
     override fun doWork(): Result {
         val input = inputData.getString(WORK_CHAIN_DATA_KEY)
-        val value1 = "C"
-        val value2 = "D"
+        val value1 = " the"
+        val value2 = " recommended"
         return try {
             val result = input + value1 + value2
             val data = workDataOf(Pair(WORK_CHAIN_DATA_KEY, result))
@@ -46,8 +46,8 @@ class Worker3(appContext: Context, workerParams: WorkerParameters) :
     Worker(appContext, workerParams) {
     override fun doWork(): Result {
         val input = inputData.getString(WORK_CHAIN_DATA_KEY)
-        val value1 = "E"
-        val value2 = "F"
+        val value1 = " solution"
+        val value2 = " for"
         return try {
             val result = input + value1 + value2
 
