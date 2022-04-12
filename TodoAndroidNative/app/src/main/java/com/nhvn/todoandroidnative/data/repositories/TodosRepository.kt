@@ -143,7 +143,7 @@ class TodosRepository(
     override fun doAWorkChain() {
         val worker1: OneTimeWorkRequest =
             OneTimeWorkRequestBuilder<Worker1>()
-                .setInputData(workDataOf(Pair(WORK_CHAIN_DATA_KEY, "Input data 0 ")))
+                .setInputData(workDataOf(Pair(WORK_CHAIN_DATA_KEY, "Overview, ")))
                 .addTag(WORKER1_TAG)
                 .addTag(WORK_CHAIN_TAG)
                 .setInitialDelay(Duration.ofSeconds(2))
@@ -158,7 +158,7 @@ class TodosRepository(
 
         val worker3: OneTimeWorkRequest =
             OneTimeWorkRequestBuilder<Worker3>()
-                .addTag("doAWorkChain.worker3")
+                .addTag(WORKER3_TAG)
                 .addTag(WORK_CHAIN_TAG)
                 .setInitialDelay(Duration.ofSeconds(2))
                 .build()
@@ -185,3 +185,4 @@ class TodosRepository(
 val WORK_CHAIN_TAG = "doAWorkChain ${Date()}";
 val WORKER1_TAG = "doAWorkChain.worker1"
 val WORKER2_TAG = "doAWorkChain.worker2"
+val WORKER3_TAG = "doAWorkChain.worker3"

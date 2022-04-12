@@ -11,10 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Observer
 import androidx.work.*
+import com.nhvn.todoandroidnative.data.repositories.WORKER1_TAG
 import com.nhvn.todoandroidnative.data.repositories.WORKER2_TAG
+import com.nhvn.todoandroidnative.data.repositories.WORKER3_TAG
 import com.nhvn.todoandroidnative.ui.elements.theme.TodoAndroidNativeTheme
 import com.nhvn.todoandroidnative.ui.stateholders.viewmodel.TodoViewModel
 import com.nhvn.todoandroidnative.data.work.UploadWorker
+import com.nhvn.todoandroidnative.data.work.WORK_CHAIN_DATA_KEY
 import java.util.concurrent.TimeUnit
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -91,8 +94,34 @@ fun DemoScreen(todoViewModel: TodoViewModel) {
                 Text(
                     text = "${
                         workChainState?.value?.map {
-                            it.tags.find { tag -> tag.contains("worker") } + "--" + it.state.toString()
+                            it.tags.find { tag -> tag.contains("worker") } + "--" + it.state.toString()// + "--" + it.outputData.getString(WORK_CHAIN_DATA_KEY)
                         }
+                    }"
+                )
+                Text(text = "\nWork1 result:")
+                Text(
+                    text = "${
+                        workChainState?.value?.find {
+                            it.tags.find { tag -> tag.contains("worker") } == WORKER1_TAG
+                        }?.outputData?.getString(WORK_CHAIN_DATA_KEY)
+                    }"
+                )
+
+                Text(text = "\nWork2 result:")
+                Text(
+                    text = "${
+                        workChainState?.value?.find {
+                            it.tags.find { tag -> tag.contains("worker") } == WORKER2_TAG
+                        }?.outputData?.getString(WORK_CHAIN_DATA_KEY)
+                    }"
+                )
+
+                Text(text = "\nWork3 result:")
+                Text(
+                    text = "${
+                        workChainState?.value?.find {
+                            it.tags.find { tag -> tag.contains("worker") } == WORKER3_TAG
+                        }?.outputData?.getString(WORK_CHAIN_DATA_KEY)
                     }"
                 )
 
