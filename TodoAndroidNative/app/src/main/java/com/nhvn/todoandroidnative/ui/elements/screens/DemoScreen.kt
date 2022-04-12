@@ -1,19 +1,27 @@
 package com.nhvn.todoandroidnative.ui.elements.screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.Observer
 import androidx.work.*
 import com.nhvn.todoandroidnative.ui.elements.theme.TodoAndroidNativeTheme
 import com.nhvn.todoandroidnative.ui.stateholders.viewmodel.TodoViewModel
 import com.nhvn.todoandroidnative.data.work.UploadWorker
 import java.util.concurrent.TimeUnit
 
+@RequiresApi(Build.VERSION_CODES.O)
 @ExperimentalMaterial3Api
 @Composable
 fun DemoScreen(todoViewModel: TodoViewModel) {
+    var workChainState = todoViewModel.workChainInfoLiveData.observeAsState()
+
     TodoAndroidNativeTheme() {
         Scaffold(
             topBar = {
@@ -77,6 +85,15 @@ fun DemoScreen(todoViewModel: TodoViewModel) {
                 }) {
                     Text(text = "Work chain")
                 }
+
+                Text(text = "Work chain State")
+                Text(
+                    text = "${
+                        workChainState?.value?.map {
+                            it.tags.find { tag -> tag.contains("worker") } + "--" + it.state.toString()
+                        }
+                    }"
+                )
             }
         }
     }

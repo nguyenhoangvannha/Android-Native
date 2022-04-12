@@ -1,17 +1,17 @@
 package com.nhvn.todoandroidnative.data.repositories
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.lifecycle.LiveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
-import androidx.work.OneTimeWorkRequest
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import androidx.work.workDataOf
+import androidx.work.*
 import com.codelab.android.datastore.UserPreferences
 import com.nhvn.todoandroidnative.data.datasources.TodosLocalDataSource
 import com.nhvn.todoandroidnative.data.datasources.TodosRemoteDataSource
@@ -25,6 +25,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
+import java.time.Duration
+import java.util.*
 
 abstract class AbstractTodosRepository() {
     abstract suspend fun getTodos(): List<Todo>
@@ -132,23 +134,33 @@ class TodosRepository(
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun doAWorkChain() {
         val worker1: OneTimeWorkRequest =
             OneTimeWorkRequestBuilder<Worker1>()
                 .setInputData(workDataOf(Pair(WORK_CHAIN_DATA_KEY, "Input data 0 ")))
+                .addTag("doAWorkChain.worker1")
+                .addTag(WORK_CHAIN_TAG)
+                .setInitialDelay(Duration.ofSeconds(2))
                 .build()
 
         val worker2: OneTimeWorkRequest =
             OneTimeWorkRequestBuilder<Worker2>()
+                .addTag("doAWorkChain.worker2")
+                .addTag(WORK_CHAIN_TAG)
+                .setInitialDelay(Duration.ofSeconds(2))
                 .build()
 
         val worker3: OneTimeWorkRequest =
             OneTimeWorkRequestBuilder<Worker3>()
+                .addTag("doAWorkChain.worker3")
+                .addTag(WORK_CHAIN_TAG)
+                .setInitialDelay(Duration.ofSeconds(2))
                 .build()
-
-        WorkManager
-            .getInstance()
-            .beginWith(worker1)
+        val workManager =
+            WorkManager
+                .getInstance();
+        workManager.beginWith(worker1)
             .then(worker2)
             .then(worker3)
             .enqueue()
@@ -163,3 +175,5 @@ class TodosRepository(
         const val NETWORK_PAGE_SIZE = 50
     }
 }
+
+val WORK_CHAIN_TAG = "doAWorkChain ${Date()}";

@@ -1,14 +1,19 @@
 package com.nhvn.todoandroidnative.ui.stateholders.viewmodel
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.codelab.android.datastore.UserPreferences
 import com.nhvn.todoandroidnative.data.datasources.models.Todo
 import com.nhvn.todoandroidnative.data.repositories.TodosRepository
+import com.nhvn.todoandroidnative.data.repositories.WORK_CHAIN_TAG
 import com.nhvn.todoandroidnative.data.work.Worker1
 import com.nhvn.todoandroidnative.data.work.Worker2
 import com.nhvn.todoandroidnative.data.work.Worker3
@@ -16,6 +21,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class TodoViewModel(private val todoRepository: TodosRepository) : ViewModel() {
+
 
     val allWords: LiveData<List<Todo>> = todoRepository.allTodos.asLiveData()
 
@@ -49,6 +55,10 @@ class TodoViewModel(private val todoRepository: TodosRepository) : ViewModel() {
         todoRepository.setDarkModeProtoStore(darkMode = darkMode)
     }
 
+    var workChainInfoLiveData: LiveData<List<WorkInfo>> =
+        WorkManager.getInstance().getWorkInfosByTagLiveData(WORK_CHAIN_TAG)
+
+    @RequiresApi(Build.VERSION_CODES.O)
     fun doAWorkChain() {
         todoRepository.doAWorkChain()
     }
