@@ -18,7 +18,9 @@
 ## Approaches to background work
 !['Immediate'](./016_background_tasks/Immediate.png)
 !['Long-running'](./016_background_tasks/Long-running.png)
+[Long running](https://www.plantuml.com/plantuml/uml/JSsn2W8n3CRnlK-HyGxa7a2NMmzKt9nB6sknIIL9ENnx2mftIwPVll-iviKQ5QThjl0SpfKJI6FEd4ONl28CDnJDQiWskkEzoklYsIUKaqEEVxFGUw-krK0mLA9EC4wmi1hwU83E7bK8rhu3sq_vGDFUXDt-z0lC_JGgNm00)
 !['Deferrable'](./016_background_tasks/Deferrable.png)
+[Deferrable](https://www.plantuml.com/plantuml/uml/JSwzhi8m38RXFLVXiPMEUW67fGDB1n0Riqc-beZy8DjLnTqJ2IIwU7hysgCQYwqvETsY-Njtn0mHlYNqphE2kWj4engAzUx_MkLnui8BvE1GmjTC-RbNvseay3NdHX06ceeQEFnHOtELJ5lhq6ydlMZLM1RQzOVFWR6DzjyR)
 <!-- |Category	|Persistent	|Impersistent|
 |----------------|---------|------------|
 |Immediate|	WorkManager	|Coroutines|
