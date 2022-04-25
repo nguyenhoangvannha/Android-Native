@@ -1,6 +1,7 @@
 package com.nhvn.todoandroidnative.ui.stateholders.viewmodel
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.*
@@ -12,6 +13,7 @@ import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.codelab.android.datastore.UserPreferences
 import com.nhvn.todoandroidnative.data.datasources.models.Todo
+import com.nhvn.todoandroidnative.data.repositories.Result
 import com.nhvn.todoandroidnative.data.repositories.TodosRepository
 import com.nhvn.todoandroidnative.data.repositories.WORK_CHAIN_TAG
 import com.nhvn.todoandroidnative.data.work.Worker1
@@ -65,6 +67,20 @@ class TodoViewModel(private val todoRepository: TodosRepository) : ViewModel() {
 
     fun cancelWorkerByTag(tag: String) {
         todoRepository.cancelWorkByTag(tag)
+    }
+
+    val makeBackgroundThreadWorkRequestData: MutableLiveData<Int> = MutableLiveData(0);
+
+    fun makeBackgroundThreadWorkRequest(input: Int) {
+        todoRepository.makeBackgroundThreadWorkRequest(input) { result ->
+            when (result) {
+                is Result.Success<Int> -> {
+                    Log.i("makeBackgroundThreadWorkRequest", result.data.toString())
+                    makeBackgroundThreadWorkRequestData.postValue(result.data!!)
+                }
+                else -> Log.i("makeBackgroundThreadWorkRequest", "Error")
+            }
+        }
     }
 }
 

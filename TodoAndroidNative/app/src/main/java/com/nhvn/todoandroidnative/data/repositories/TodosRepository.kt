@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.map
 import java.io.IOException
 import java.time.Duration
 import java.util.*
+import java.util.concurrent.Executor
 
 abstract class AbstractTodosRepository() {
     abstract suspend fun getTodos(): List<Todo>
@@ -44,6 +45,10 @@ abstract class AbstractTodosRepository() {
     abstract suspend fun setDarkModeProtoStore(darkMode: Boolean)
     abstract fun doAWorkChain()
     abstract fun cancelWorkByTag(tag: String)
+    abstract fun makeBackgroundThreadWorkRequest(
+        input: Int,
+        callback: (Result<Int>) -> Unit,
+    )
 }
 
 class TodosRepository(
@@ -52,6 +57,7 @@ class TodosRepository(
     private val todoPagingSource: PagingSource<Int, Todo>,
     private val userPreferencesStore: DataStore<Preferences>,
     private val userPreferencesProtoStore: DataStore<UserPreferences>,
+    private val executor: Executor,
 //// This could be CoroutineScope(SupervisorJob() + Dispatchers.Default).
 //    private val externalScope: CoroutineScope
 ) : AbstractTodosRepository() {
@@ -171,6 +177,24 @@ class TodosRepository(
     override fun cancelWorkByTag(tag: String) {
         workManager.cancelAllWorkByTag(tag)
     }
+
+    override fun makeBackgroundThreadWorkRequest(
+        input: Int,
+        callback: (Result<Int>) -> Unit,
+    ) {
+        executor.execute {
+            try {
+                val response = input + 100;
+                Thread.sleep(2000)
+                callback(Result.Success(response))
+            } catch (e: Exception) {
+                val errorResult = Result.Error(e)
+                callback(errorResult)
+            }
+        }
+    }
+
+
 //
 //    override val todoPager: Pager<Int, Todo> =
 //        Pager<Int, Todo>(PagingConfig(pageSize = 6)) {
@@ -186,3 +210,8 @@ val WORK_CHAIN_TAG = "doAWorkChain ${Date()}";
 val WORKER1_TAG = "doAWorkChain.worker1"
 val WORKER2_TAG = "doAWorkChain.worker2"
 val WORKER3_TAG = "doAWorkChain.worker3"
+
+sealed class Result<out R> {
+    data class Success<out T>(val data: T) : Result<T>()
+    data class Error(val exception: Exception) : Result<Nothing>()
+}

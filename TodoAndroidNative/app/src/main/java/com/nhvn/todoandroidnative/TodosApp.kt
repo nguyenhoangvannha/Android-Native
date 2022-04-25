@@ -11,6 +11,8 @@ import com.nhvn.todoandroidnative.data.datasources.paging.TodoPagingSource
 import com.nhvn.todoandroidnative.data.repositories.TodosRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 class TodosApp : Application() {
     // No need to cancel this scope as it'll be torn down with the process
@@ -22,13 +24,16 @@ class TodosApp : Application() {
 
     private val todosLocalDataSource by lazy { TodosLocalDataSource(database.todoDao()) }
 
+    val executorService: ExecutorService = Executors.newFixedThreadPool(4)
+
     val todoRepository by lazy {
         TodosRepository(
             TodosRemoteDataSource(TodosApiImpl()),
             todosLocalDataSource,
             TodoPagingSource(todosLocalDataSource),
             dataStore,
-            userPreferencesProtoStore = userPreferencesStore
+            userPreferencesProtoStore = userPreferencesStore,
+            executor = executorService,
         )
     }
 }
