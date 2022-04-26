@@ -1,5 +1,6 @@
 package com.nhvn.todoandroidnative.ui.elements.screens
 
+import android.content.Intent
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
@@ -9,8 +10,10 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.work.*
+import com.nhvn.todoandroidnative.data.ForegroundService
 import com.nhvn.todoandroidnative.data.repositories.WORKER1_TAG
 import com.nhvn.todoandroidnative.data.repositories.WORKER2_TAG
 import com.nhvn.todoandroidnative.data.repositories.WORKER3_TAG
@@ -18,12 +21,13 @@ import com.nhvn.todoandroidnative.ui.elements.theme.TodoAndroidNativeTheme
 import com.nhvn.todoandroidnative.ui.stateholders.viewmodel.TodoViewModel
 import com.nhvn.todoandroidnative.data.work.UploadWorker
 import com.nhvn.todoandroidnative.data.work.WORK_CHAIN_DATA_KEY
+import com.nhvn.todoandroidnative.ui.stateholders.viewmodel.TodoAndroidViewModel
 import java.util.concurrent.TimeUnit
 
 @RequiresApi(Build.VERSION_CODES.O)
 @ExperimentalMaterial3Api
 @Composable
-fun DemoScreen(todoViewModel: TodoViewModel) {
+fun DemoScreen(todoViewModel: TodoViewModel, todoAndroidViewModel: TodoAndroidViewModel) {
     var workChainState = todoViewModel.workChainInfoLiveData.observeAsState()
     var makeBackgroundThreadWorkRequestDataState =
         todoViewModel.makeBackgroundThreadWorkRequestData.observeAsState();
@@ -156,6 +160,12 @@ fun DemoScreen(todoViewModel: TodoViewModel) {
                         makeCoroutinesWorkRequestDataState.value
                     }"
                 )
+
+                Button(onClick = {
+                    todoAndroidViewModel.startService();
+                }) {
+                    Text(text = "ForegroundService")
+                }
             }
         }
     }

@@ -1,11 +1,13 @@
 package com.nhvn.todoandroidnative.ui.elements.screens.homescreen
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.TextField
 import androidx.compose.runtime.mutableStateOf
@@ -15,6 +17,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.viewModels
 import com.nhvn.todoandroidnative.ui.elements.USERNOTE_STATE_KEY
 import com.nhvn.todoandroidnative.ui.elements.MyApp
+import com.nhvn.todoandroidnative.ui.stateholders.viewmodel.TodoAndroidViewModel
 import com.nhvn.todoandroidnative.ui.stateholders.viewmodel.TodoViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -34,6 +37,7 @@ class ComposablesExampleFragment : Fragment() {
     var userNote: String? = null
 
     private val viewModel by viewModels<TodoViewModel>()
+    private val todoAndroidViewModel by viewModels<TodoAndroidViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +53,7 @@ class ComposablesExampleFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,7 +63,7 @@ class ComposablesExampleFragment : Fragment() {
             setContent {
                 val (title, setTitle) = remember { mutableStateOf(if (userNote != null) userNote else "") }
                 Column() {
-                    MyApp(todoViewModel = viewModel)
+                    MyApp(todoViewModel = viewModel, todoAndroidViewModel = todoAndroidViewModel)
                     TextField(value = title!!, onValueChange = {
                         setTitle(it)
                         userNote = it
