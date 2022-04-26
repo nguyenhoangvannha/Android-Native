@@ -88,7 +88,7 @@ class TodoViewModel(private val todoRepository: TodosRepository) : ViewModel() {
 
     fun makeCoroutinesWorkRequest(input: Int) {
         // Create a new coroutine to move the execution off the UI thread
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             todoRepository.makeCoroutinesWorkRequest(input) { result ->
                 when (result) {
                     is Result.Success<Int> -> {
