@@ -25,6 +25,8 @@ import java.util.concurrent.TimeUnit
 @Composable
 fun DemoScreen(todoViewModel: TodoViewModel) {
     var workChainState = todoViewModel.workChainInfoLiveData.observeAsState()
+    var makeBackgroundThreadWorkRequestDataState =
+        todoViewModel.makeBackgroundThreadWorkRequestData.observeAsState();
 
     TodoAndroidNativeTheme() {
         Scaffold(
@@ -130,6 +132,17 @@ fun DemoScreen(todoViewModel: TodoViewModel) {
                 }) {
                     Text(text = "Cancel worker1")
                 }
+
+                Button(onClick = {
+                    todoViewModel.makeBackgroundThreadWorkRequest(33)
+                }) {
+                    Text(text = "makeBackgroundThreadWorkRequest")
+                }
+                Text(
+                    text = "${
+                        makeBackgroundThreadWorkRequestDataState.value
+                    }"
+                )
             }
         }
     }
