@@ -22,9 +22,11 @@ import com.nhvn.todoandroidnative.data.work.WORK_CHAIN_DATA_KEY
 import com.nhvn.todoandroidnative.data.work.Worker1
 import com.nhvn.todoandroidnative.data.work.Worker2
 import com.nhvn.todoandroidnative.data.work.Worker3
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.time.Duration
 import java.util.*
@@ -47,6 +49,11 @@ abstract class AbstractTodosRepository() {
     abstract fun doAWorkChain()
     abstract fun cancelWorkByTag(tag: String)
     abstract fun makeBackgroundThreadWorkRequest(
+        input: Int,
+        callback: (Result<Int>) -> Unit,
+    )
+
+    abstract suspend fun makeCoroutinesWorkRequest(
         input: Int,
         callback: (Result<Int>) -> Unit,
     )
@@ -195,6 +202,22 @@ class TodosRepository(
                 val errorResult = Result.Error(e)
                 //callback(errorResult)
                 resultHandler.post { callback(errorResult) }
+            }
+        }
+    }
+
+    override suspend fun makeCoroutinesWorkRequest(input: Int, callback: (Result<Int>) -> Unit) {
+        // Move the execution of the coroutine to the I/O dispatcher
+        return withContext(Dispatchers.IO) {
+            // Blocking network request code
+            try {
+                val response = input + 100;
+                Thread.sleep(2000)
+                callback(Result.Success(response))
+                resultHandler.post { callback(Result.Success(response)) }
+            } catch (e: Exception) {
+                val errorResult = Result.Error(e)
+                callback(errorResult)
             }
         }
     }

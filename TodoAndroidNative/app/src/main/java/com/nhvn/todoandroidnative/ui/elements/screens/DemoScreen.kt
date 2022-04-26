@@ -27,6 +27,8 @@ fun DemoScreen(todoViewModel: TodoViewModel) {
     var workChainState = todoViewModel.workChainInfoLiveData.observeAsState()
     var makeBackgroundThreadWorkRequestDataState =
         todoViewModel.makeBackgroundThreadWorkRequestData.observeAsState();
+    var makeCoroutinesWorkRequestDataState =
+        todoViewModel.makeCoroutinesWorkRequestData.observeAsState();
 
     TodoAndroidNativeTheme() {
         Scaffold(
@@ -141,6 +143,17 @@ fun DemoScreen(todoViewModel: TodoViewModel) {
                 Text(
                     text = "${
                         makeBackgroundThreadWorkRequestDataState.value
+                    }"
+                )
+
+                Button(onClick = {
+                    todoViewModel.makeCoroutinesWorkRequest(44)
+                }) {
+                    Text(text = "makeCoroutinesWorkRequest")
+                }
+                Text(
+                    text = "${
+                        makeCoroutinesWorkRequestDataState.value
                     }"
                 )
             }

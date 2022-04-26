@@ -19,6 +19,7 @@ import com.nhvn.todoandroidnative.data.repositories.WORK_CHAIN_TAG
 import com.nhvn.todoandroidnative.data.work.Worker1
 import com.nhvn.todoandroidnative.data.work.Worker2
 import com.nhvn.todoandroidnative.data.work.Worker3
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
@@ -79,6 +80,23 @@ class TodoViewModel(private val todoRepository: TodosRepository) : ViewModel() {
                     makeBackgroundThreadWorkRequestData.postValue(result.data!!)
                 }
                 else -> Log.i("makeBackgroundThreadWorkRequest", "Error")
+            }
+        }
+    }
+
+    val makeCoroutinesWorkRequestData: MutableLiveData<Int> = MutableLiveData(0);
+
+    fun makeCoroutinesWorkRequest(input: Int) {
+        // Create a new coroutine to move the execution off the UI thread
+        viewModelScope.launch {
+            todoRepository.makeCoroutinesWorkRequest(input) { result ->
+                when (result) {
+                    is Result.Success<Int> -> {
+                        Log.i("makeCoroutinesWorkRequest", result.data.toString())
+                        makeCoroutinesWorkRequestData.postValue(result.data!!)
+                    }
+                    else -> Log.i("makeCoroutinesWorkRequest", "Error")
+                }
             }
         }
     }
