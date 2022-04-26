@@ -71,6 +71,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.elements.MainActivity" />
         </activity>
+
+        <receiver
+            android:name=".data.datasources.MyBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
+                <action android:name="android.intent.action.AIRPLANE_MODE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
