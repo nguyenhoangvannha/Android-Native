@@ -1,6 +1,7 @@
 package com.nhvn.todoandroidnative.data.repositories
 
 import android.os.Build
+import android.os.Handler
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.datastore.core.DataStore
@@ -58,6 +59,8 @@ class TodosRepository(
     private val userPreferencesStore: DataStore<Preferences>,
     private val userPreferencesProtoStore: DataStore<UserPreferences>,
     private val executor: Executor,
+    private val resultHandler: Handler,
+
 //// This could be CoroutineScope(SupervisorJob() + Dispatchers.Default).
 //    private val externalScope: CoroutineScope
 ) : AbstractTodosRepository() {
@@ -186,10 +189,12 @@ class TodosRepository(
             try {
                 val response = input + 100;
                 Thread.sleep(2000)
-                callback(Result.Success(response))
+                //callback(Result.Success(response))
+                resultHandler.post { callback(Result.Success(response)) }
             } catch (e: Exception) {
                 val errorResult = Result.Error(e)
-                callback(errorResult)
+                //callback(errorResult)
+                resultHandler.post { callback(errorResult) }
             }
         }
     }

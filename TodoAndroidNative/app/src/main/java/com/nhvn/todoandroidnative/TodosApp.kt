@@ -1,6 +1,9 @@
 package com.nhvn.todoandroidnative
 
 import android.app.Application
+import android.os.Handler
+import android.os.Looper
+import androidx.core.os.HandlerCompat
 import com.nhvn.todoandroidnative.data.datasources.AppDatabase
 import com.nhvn.todoandroidnative.data.datasources.TodosApiImpl
 import com.nhvn.todoandroidnative.data.datasources.TodosLocalDataSource
@@ -24,7 +27,9 @@ class TodosApp : Application() {
 
     private val todosLocalDataSource by lazy { TodosLocalDataSource(database.todoDao()) }
 
-    val executorService: ExecutorService = Executors.newFixedThreadPool(4)
+    private val executorService: ExecutorService = Executors.newFixedThreadPool(4)
+
+    private val mainThreadHandler: Handler = HandlerCompat.createAsync(Looper.getMainLooper())
 
     val todoRepository by lazy {
         TodosRepository(
@@ -34,6 +39,7 @@ class TodosApp : Application() {
             dataStore,
             userPreferencesProtoStore = userPreferencesStore,
             executor = executorService,
+            resultHandler = mainThreadHandler,
         )
     }
 }
