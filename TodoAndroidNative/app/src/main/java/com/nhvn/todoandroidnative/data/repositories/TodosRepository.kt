@@ -50,6 +50,11 @@ abstract class AbstractTodosRepository() {
         input: Int,
         callback: (Result<Int>) -> Unit,
     )
+
+    abstract fun makeCoroutinesWorkRequest(
+        input: Int,
+        callback: (Result<Int>) -> Unit,
+    )
 }
 
 class TodosRepository(
@@ -196,6 +201,18 @@ class TodosRepository(
                 //callback(errorResult)
                 resultHandler.post { callback(errorResult) }
             }
+        }
+    }
+
+    override fun makeCoroutinesWorkRequest(input: Int, callback: (Result<Int>) -> Unit) {
+        try {
+            val response = input + 100;
+            Thread.sleep(2000)
+            callback(Result.Success(response))
+            resultHandler.post { callback(Result.Success(response)) }
+        } catch (e: Exception) {
+            val errorResult = Result.Error(e)
+            callback(errorResult)
         }
     }
 
