@@ -17,6 +17,7 @@ import com.nhvn.todoandroidnative.data.ForegroundService
 import com.nhvn.todoandroidnative.data.repositories.WORKER1_TAG
 import com.nhvn.todoandroidnative.data.repositories.WORKER2_TAG
 import com.nhvn.todoandroidnative.data.repositories.WORKER3_TAG
+import com.nhvn.todoandroidnative.data.work.ForegroundWorker
 import com.nhvn.todoandroidnative.ui.elements.theme.TodoAndroidNativeTheme
 import com.nhvn.todoandroidnative.ui.stateholders.viewmodel.TodoViewModel
 import com.nhvn.todoandroidnative.data.work.UploadWorker
@@ -90,6 +91,12 @@ fun DemoScreen(todoViewModel: TodoViewModel, todoAndroidViewModel: TodoAndroidVi
 
                 }) {
                     Text(text = "setExpedited")
+                }
+
+                Button(onClick = {
+                    todoViewModel.doAForegroundWorker()
+                }) {
+                    Text(text = "Work manager + Forground Services")
                 }
 
                 Button(onClick = {
