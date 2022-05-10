@@ -4,8 +4,9 @@ import android.util.Log
 import androidx.paging.*
 import com.nhvn.todoandroidnative.data.datasources.TodosLocalDataSource
 import com.nhvn.todoandroidnative.data.datasources.models.Todo
+import javax.inject.Inject
 
-class TodoPagingSource(
+class TodoPagingSource @Inject constructor(
     private val dataSource: TodosLocalDataSource
 ) : PagingSource<Int, Todo>() {
     override suspend fun load(
