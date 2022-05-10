@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
 
         lifecycle.addObserver(MyActivityLifecycleObserver(lifecycle))
 
-        registerReceiver(br, filter)
+        //registerReceiver(br, filter)
 
         setContent {
             MyApp(todoViewModel = viewModel, todoAndroidViewModel = todoAndroidViewModel);
@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onDestroy() {
-        unregisterReceiver(br)
+//        unregisterReceiver(br)
         super.onDestroy()
     }
 

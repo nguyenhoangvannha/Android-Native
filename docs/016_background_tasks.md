@@ -51,3 +51,11 @@ Some use cases for using foreground services directly are as follows:
 
 # [Background Thread](./016_background_tasks/background_threads.md)
 
+|Kind|What| When to use| Example|
+|-|-|-|-|
+|Background threads| Manual handle background thread | manually create thread and understand the basics of threading and its underlying mechanisms|request API|
+|Alarm manager|This class provides access to the system alarm services |perform time-based operations outside the lifetime of your application in exact on inexact time|a calendar notification|
+|Foreground Services| Foreground services perform operations that are noticeable to the user. |needs to perform a task that is noticeable by the user even when they're not directly interacting with the app.|A music player app that plays music in a foreground service.|
+|Work manager| API for background persistent work processing|Work is persistent when it remains scheduled through app restarts and system reboots.| Send a message|
+|Broadcast|Android apps can send or receive broadcast messages from the Android system and other Android apps| Receive broad cast from system or other app event| Receive network available event|
+|coroutines| A coroutine is an instance of suspendable computation.| to run works concurrently | request API|
