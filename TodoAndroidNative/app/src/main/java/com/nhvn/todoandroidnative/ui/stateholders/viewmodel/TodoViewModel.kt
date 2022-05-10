@@ -1,9 +1,13 @@
 package com.nhvn.todoandroidnative.ui.stateholders.viewmodel
 
+import android.app.Application
+import android.app.Service
+import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -12,6 +16,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.codelab.android.datastore.UserPreferences
+import com.nhvn.todoandroidnative.data.ForegroundService
 import com.nhvn.todoandroidnative.data.datasources.models.Todo
 import com.nhvn.todoandroidnative.data.repositories.Result
 import com.nhvn.todoandroidnative.data.repositories.TodosRepository
@@ -109,5 +114,19 @@ class TodoViewModelFactory(private val repository: TodosRepository) : ViewModelP
             return TodoViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
+    }
+}
+
+class TodoAndroidViewModel(application: Application) : AndroidViewModel(application) {
+    val serviceIntent = Intent(getApplication(), ForegroundService::class.java)
+
+    fun startService() {
+        serviceIntent.putExtra("inputExtra", "Foreground Service Example in Android")
+        ContextCompat.startForegroundService(getApplication(), serviceIntent)
+    }
+
+    fun stopService() {
+        val serviceIntent = Intent(getApplication(), ForegroundService::class.java)
+        //stopService(serviceIntent)
     }
 }

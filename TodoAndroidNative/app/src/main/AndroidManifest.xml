@@ -6,6 +6,7 @@
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -19,6 +20,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TodoAndroidNative">
+        <service
+            android:name=".data.ForegroundService"
+            android:enabled="true"
+            android:exported="false" />
+
         <activity
             android:name="com.nhvn.todoandroidnative.ui.elements.activities.DataAccessRationaleActivity"
             android:permission="android.permission.START_VIEW_PERMISSION_USAGE"

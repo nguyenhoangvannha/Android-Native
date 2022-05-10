@@ -1,6 +1,10 @@
 package com.nhvn.todoandroidnative
 
 import android.app.Application
+import android.content.BroadcastReceiver
+import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Handler
 import android.os.Looper
 import androidx.core.os.HandlerCompat
@@ -62,5 +66,20 @@ class TodosApp : Application() {
             executor = threadPoolExecutor,
             resultHandler = mainThreadHandler,
         )
+    }
+    private val br: BroadcastReceiver = MyBroadcastReceiver()
+
+    private val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION).apply {
+        addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED)
+    }
+
+    override fun onCreate() {
+        registerReceiver(br, filter)
+        super.onCreate()
+    }
+
+    override fun onTerminate() {
+        unregisterReceiver(br)
+        super.onTerminate()
     }
 }
