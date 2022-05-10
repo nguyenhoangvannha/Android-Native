@@ -1,34 +1,30 @@
 package com.nhvn.todoandroidnative.ui.stateholders.viewmodel
 
 import android.app.Application
-import android.app.Service
 import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import androidx.work.OneTimeWorkRequest
-import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.codelab.android.datastore.UserPreferences
 import com.nhvn.todoandroidnative.data.ForegroundService
 import com.nhvn.todoandroidnative.data.datasources.models.Todo
+import com.nhvn.todoandroidnative.data.repositories.AbstractTodosRepository
 import com.nhvn.todoandroidnative.data.repositories.Result
 import com.nhvn.todoandroidnative.data.repositories.TodosRepository
 import com.nhvn.todoandroidnative.data.repositories.WORK_CHAIN_TAG
-import com.nhvn.todoandroidnative.data.work.Worker1
-import com.nhvn.todoandroidnative.data.work.Worker2
-import com.nhvn.todoandroidnative.data.work.Worker3
-import kotlinx.coroutines.Dispatchers
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TodoViewModel(private val todoRepository: TodosRepository) : ViewModel() {
+@HiltViewModel
+class TodoViewModel @Inject constructor(private val todoRepository: TodosRepository) : ViewModel() {
 
 
     val allWords: LiveData<List<Todo>> = todoRepository.allTodos.asLiveData()

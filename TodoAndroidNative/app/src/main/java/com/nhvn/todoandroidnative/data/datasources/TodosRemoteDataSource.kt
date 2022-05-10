@@ -3,8 +3,9 @@ package com.nhvn.todoandroidnative.data.datasources
 import com.nhvn.todoandroidnative.data.datasources.models.Todo
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class TodosRemoteDataSource(
+class TodosRemoteDataSource @Inject constructor(
     private val newsApi: TodosApi,
 //    private val ioDispatcher: CoroutineDispatcher
 ) {

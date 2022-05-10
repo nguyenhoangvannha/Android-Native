@@ -8,8 +8,9 @@ import com.nhvn.todoandroidnative.data.datasources.daos.TodoDao
 import com.nhvn.todoandroidnative.data.datasources.models.Todo
 import com.nhvn.todoandroidnative.data.repositories.AbstractTodosRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class TodosLocalDataSource(
+class TodosLocalDataSource @Inject constructor(
     private val todoDao: TodoDao
 ) {
     fun getTodos(): List<Todo> {

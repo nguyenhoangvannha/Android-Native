@@ -4,10 +4,6 @@ import android.os.Build
 import android.os.Handler
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.lifecycle.LiveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -16,7 +12,6 @@ import androidx.work.*
 import com.codelab.android.datastore.UserPreferences
 import com.nhvn.todoandroidnative.data.datasources.TodosLocalDataSource
 import com.nhvn.todoandroidnative.data.datasources.TodosRemoteDataSource
-import com.nhvn.todoandroidnative.data.datasources.datastore.PreferencesKeys
 import com.nhvn.todoandroidnative.data.datasources.models.Todo
 import com.nhvn.todoandroidnative.data.work.WORK_CHAIN_DATA_KEY
 import com.nhvn.todoandroidnative.data.work.Worker1
@@ -24,13 +19,12 @@ import com.nhvn.todoandroidnative.data.work.Worker2
 import com.nhvn.todoandroidnative.data.work.Worker3
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.withContext
-import java.io.IOException
 import java.time.Duration
 import java.util.*
 import java.util.concurrent.Executor
+import javax.inject.Inject
 
 abstract class AbstractTodosRepository() {
     abstract suspend fun getTodos(): List<Todo>
@@ -59,12 +53,12 @@ abstract class AbstractTodosRepository() {
     )
 }
 
-class TodosRepository(
+class TodosRepository @Inject constructor(
     private val todosRemoteDataSource: TodosRemoteDataSource, // network
     private val todosLocalDataSource: TodosLocalDataSource, // database
     private val todoPagingSource: PagingSource<Int, Todo>,
-    private val userPreferencesStore: DataStore<Preferences>,
-    private val userPreferencesProtoStore: DataStore<UserPreferences>,
+//    private val userPreferencesStore: DataStore<Preferences>,
+//    private val userPreferencesProtoStore: DataStore<UserPreferences>,
     private val executor: Executor,
     private val resultHandler: Handler,
 
@@ -121,34 +115,36 @@ class TodosRepository(
     override suspend fun insert(todo: Todo) = todosLocalDataSource.insert(todo)
 
     override fun darkMode(): Flow<Boolean> {
-        return userPreferencesStore.data.map { preferences ->
-            preferences[PreferencesKeys.DARK_MODE] ?: false
-        }
+//        return userPreferencesStore.data.map { preferences ->
+//            preferences[PreferencesKeys.DARK_MODE] ?: false
+//        }
+        return emptyFlow()
     }
 
     override suspend fun setDarkMode(darkMode: Boolean) {
-        userPreferencesStore.edit { settings ->
-            settings[PreferencesKeys.DARK_MODE] = darkMode
-        }
+//        userPreferencesStore.edit { settings ->
+//            settings[PreferencesKeys.DARK_MODE] = darkMode
+//        }
     }
 
     override fun userPreferencesFlow(): Flow<UserPreferences> {
-        return userPreferencesProtoStore.data
-            .catch { exception ->
-                // dataStore.data throws an IOException when an error is encountered when reading data
-                if (exception is IOException) {
-                    Log.e("Error", "Error reading sort order preferences.", exception)
-                    emit(UserPreferences.getDefaultInstance())
-                } else {
-                    throw exception
-                }
-            }
+//        return userPreferencesProtoStore.data
+//            .catch { exception ->
+//                // dataStore.data throws an IOException when an error is encountered when reading data
+//                if (exception is IOException) {
+//                    Log.e("Error", "Error reading sort order preferences.", exception)
+//                    emit(UserPreferences.getDefaultInstance())
+//                } else {
+//                    throw exception
+//                }
+//            }
+        return emptyFlow()
     }
 
     override suspend fun setDarkModeProtoStore(darkMode: Boolean) {
-        userPreferencesProtoStore.updateData { preferences ->
-            preferences.toBuilder().setDarkMode(darkMode).build()
-        }
+//        userPreferencesProtoStore.updateData { preferences ->
+//            preferences.toBuilder().setDarkMode(darkMode).build()
+//        }
     }
 
     private val workManager =
