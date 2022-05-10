@@ -101,6 +101,10 @@ class TodoViewModel @Inject constructor(private val todoRepository: TodosReposit
             }
         }
     }
+
+    fun doAForegroundWorker() {
+        todoRepository.doAForegroundWorker()
+    }
 }
 
 class TodoViewModelFactory(private val repository: TodosRepository) : ViewModelProvider.Factory {

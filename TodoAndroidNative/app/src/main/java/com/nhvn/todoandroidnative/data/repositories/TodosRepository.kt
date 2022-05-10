@@ -13,10 +13,7 @@ import com.codelab.android.datastore.UserPreferences
 import com.nhvn.todoandroidnative.data.datasources.TodosLocalDataSource
 import com.nhvn.todoandroidnative.data.datasources.TodosRemoteDataSource
 import com.nhvn.todoandroidnative.data.datasources.models.Todo
-import com.nhvn.todoandroidnative.data.work.WORK_CHAIN_DATA_KEY
-import com.nhvn.todoandroidnative.data.work.Worker1
-import com.nhvn.todoandroidnative.data.work.Worker2
-import com.nhvn.todoandroidnative.data.work.Worker3
+import com.nhvn.todoandroidnative.data.work.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
@@ -51,6 +48,8 @@ abstract class AbstractTodosRepository() {
         input: Int,
         callback: (Result<Int>) -> Unit,
     )
+
+    abstract fun doAForegroundWorker()
 }
 
 class TodosRepository @Inject constructor(
@@ -218,6 +217,14 @@ class TodosRepository @Inject constructor(
         }
     }
 
+    override fun doAForegroundWorker() {
+        val foregroundWorkRequest: WorkRequest =
+            OneTimeWorkRequestBuilder<ForegroundWorker>()
+                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                .build()
+
+        workManager.enqueue(foregroundWorkRequest)
+    }
 
 //
 //    override val todoPager: Pager<Int, Todo> =
