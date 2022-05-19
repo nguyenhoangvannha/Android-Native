@@ -90,7 +90,7 @@ fun HomeScreen(
                 Box(modifier = Modifier.weight(1F)) {
                     when (selectedTabIndex) {
                         0 -> ListTodo(
-                            todos = todos,
+                            todos = todos.filter { it.state == TodoWorkingStateEnum.created },
                             modifier = Modifier.padding(16.dp),
                             onNewTodoWorkingStateSelected = { todo, newState ->
                                 // todoViewModel.changeTodoWorkingState(todo, newState)
@@ -100,7 +100,7 @@ fun HomeScreen(
                             }
                         )
                         1 -> ListTodo(
-                            todos = todos,
+                            todos = todos.filter { it.state == TodoWorkingStateEnum.inprocess },
                             modifier = Modifier.padding(16.dp),
                             onNewTodoWorkingStateSelected = { todo, newState ->
                                 // todoViewModel.changeTodoWorkingState(todo, newState)
@@ -110,7 +110,7 @@ fun HomeScreen(
                             }
                         )
                         2 -> ListTodo(
-                            todos = todos,
+                            todos = todos.filter { it.state == TodoWorkingStateEnum.done },
                             modifier = Modifier.padding(16.dp),
                             onNewTodoWorkingStateSelected = { todo, newState ->
                                 // todoViewModel.changeTodoWorkingState(todo, newState)

@@ -55,7 +55,7 @@ abstract class AbstractTodosRepository() {
 
 class TodosRepository @Inject constructor(
 //    private val todosRemoteDataSource: TodosRemoteDataSource, // network
-    private val todosLocalDataSource: TodosLocalDataSource, // database
+    private val todosLocalDataSource: AbstractTodosRepository, // database
 //    private val todoPagingSource: PagingSource<Int, Todo>,
 //    private val userPreferencesStore: DataStore<Preferences>,
 //    private val userPreferencesProtoStore: DataStore<UserPreferences>,
