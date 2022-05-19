@@ -51,6 +51,9 @@ Some use cases for using foreground services directly are as follows:
 
 # [Background Thread](./016_background_tasks/background_threads.md)
 
+
+# Compare between background task strategies
+
 |Kind|What| When to use| Example|
 |-|-|-|-|
 |Background threads| Manual handle background thread | manually create thread and understand the basics of threading and its underlying mechanisms|request API|
@@ -59,3 +62,4 @@ Some use cases for using foreground services directly are as follows:
 |Work manager| API for background persistent work processing|Work is persistent when it remains scheduled through app restarts and system reboots.| Send a message|
 |Broadcast|Android apps can send or receive broadcast messages from the Android system and other Android apps| Receive broad cast from system or other app event| Receive network available event|
 |coroutines| A coroutine is an instance of suspendable computation.| to run works concurrently | request API|
+|Work manager + Foreground Services| support for long running workers| These Workers can run longer than 10 minutes|a long-running worker that requires access to location, camera, or microphone|
