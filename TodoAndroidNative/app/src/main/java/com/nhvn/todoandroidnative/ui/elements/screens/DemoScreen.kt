@@ -29,11 +29,11 @@ import java.util.concurrent.TimeUnit
 @ExperimentalMaterial3Api
 @Composable
 fun DemoScreen(todoViewModel: TodoViewModel, todoAndroidViewModel: TodoAndroidViewModel) {
-    var workChainState = todoViewModel.workChainInfoLiveData.observeAsState()
-    var makeBackgroundThreadWorkRequestDataState =
-        todoViewModel.makeBackgroundThreadWorkRequestData.observeAsState();
-    var makeCoroutinesWorkRequestDataState =
-        todoViewModel.makeCoroutinesWorkRequestData.observeAsState();
+//    var workChainState = todoViewModel.workChainInfoLiveData.observeAsState()
+//    var makeBackgroundThreadWorkRequestDataState =
+//        todoViewModel.makeBackgroundThreadWorkRequestData.observeAsState();
+//    var makeCoroutinesWorkRequestDataState =
+//        todoViewModel.makeCoroutinesWorkRequestData.observeAsState();
 
     TodoAndroidNativeTheme() {
         Scaffold(
@@ -52,128 +52,128 @@ fun DemoScreen(todoViewModel: TodoViewModel, todoAndroidViewModel: TodoAndroidVi
             },
 
             ) {
-            Column(
-                modifier = Modifier.fillMaxHeight(),
-            ) {
-                Button(onClick = {
-                    val uploadWorkRequest: WorkRequest =
-                        OneTimeWorkRequestBuilder<UploadWorker>()
-                            .build()
-
-                    WorkManager
-                        .getInstance()
-                        .enqueue(uploadWorkRequest)
-                }) {
-                    Text(text = "OneTimeWorkRequest")
-                }
-
-                Button(onClick = {
-                    val uploadWorkRequest: WorkRequest =
-                        PeriodicWorkRequestBuilder<UploadWorker>(15, TimeUnit.MINUTES)
-                            // Additional configuration
-                            .build()
-                    WorkManager
-                        .getInstance()
-                        .enqueue(uploadWorkRequest)
-                }) {
-                    Text(text = "Schedule periodic work")
-                }
-
-                Button(onClick = {
-                    val uploadWorkRequest: WorkRequest =
-                        OneTimeWorkRequestBuilder<UploadWorker>()
-                            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-                            .build()
-
-                    WorkManager
-                        .getInstance()
-                        .enqueue(uploadWorkRequest)
-
-                }) {
-                    Text(text = "setExpedited")
-                }
-
-                Button(onClick = {
-                    todoViewModel.doAForegroundWorker()
-                }) {
-                    Text(text = "Work manager + Forground Services")
-                }
-
-                Button(onClick = {
-                    todoViewModel.doAWorkChain()
-                }) {
-                    Text(text = "Work chain")
-                }
-
-                Text(text = "Work chain State")
-                Text(
-                    text = "${
-                        workChainState?.value?.map {
-                            it.tags.find { tag -> tag.contains("worker") } + "--" + it.state.toString()// + "--" + it.outputData.getString(WORK_CHAIN_DATA_KEY)
-                        }
-                    }"
-                )
-                Text(text = "\nWork1 result:")
-                Text(
-                    text = "${
-                        workChainState?.value?.find {
-                            it.tags.find { tag -> tag.contains("worker") } == WORKER1_TAG
-                        }?.outputData?.getString(WORK_CHAIN_DATA_KEY)
-                    }"
-                )
-
-                Text(text = "\nWork2 result:")
-                Text(
-                    text = "${
-                        workChainState?.value?.find {
-                            it.tags.find { tag -> tag.contains("worker") } == WORKER2_TAG
-                        }?.outputData?.getString(WORK_CHAIN_DATA_KEY)
-                    }"
-                )
-
-                Text(text = "\nWork3 result:")
-                Text(
-                    text = "${
-                        workChainState?.value?.find {
-                            it.tags.find { tag -> tag.contains("worker") } == WORKER3_TAG
-                        }?.outputData?.getString(WORK_CHAIN_DATA_KEY)
-                    }"
-                )
-
-                Button(onClick = {
-                    todoViewModel.cancelWorkerByTag(WORKER2_TAG)
-                }) {
-                    Text(text = "Cancel worker1")
-                }
-
-                Button(onClick = {
-                    todoViewModel.makeBackgroundThreadWorkRequest(33)
-                }) {
-                    Text(text = "makeBackgroundThreadWorkRequest")
-                }
-                Text(
-                    text = "${
-                        makeBackgroundThreadWorkRequestDataState.value
-                    }"
-                )
-
-                Button(onClick = {
-                    todoViewModel.makeCoroutinesWorkRequest(44)
-                }) {
-                    Text(text = "makeCoroutinesWorkRequest")
-                }
-                Text(
-                    text = "${
-                        makeCoroutinesWorkRequestDataState.value
-                    }"
-                )
-
-                Button(onClick = {
-                    todoAndroidViewModel.startService();
-                }) {
-                    Text(text = "ForegroundService")
-                }
-            }
+//            Column(
+//                modifier = Modifier.fillMaxHeight(),
+//            ) {
+//                Button(onClick = {
+//                    val uploadWorkRequest: WorkRequest =
+//                        OneTimeWorkRequestBuilder<UploadWorker>()
+//                            .build()
+//
+//                    WorkManager
+//                        .getInstance()
+//                        .enqueue(uploadWorkRequest)
+//                }) {
+//                    Text(text = "OneTimeWorkRequest")
+//                }
+//
+//                Button(onClick = {
+//                    val uploadWorkRequest: WorkRequest =
+//                        PeriodicWorkRequestBuilder<UploadWorker>(15, TimeUnit.MINUTES)
+//                            // Additional configuration
+//                            .build()
+//                    WorkManager
+//                        .getInstance()
+//                        .enqueue(uploadWorkRequest)
+//                }) {
+//                    Text(text = "Schedule periodic work")
+//                }
+//
+//                Button(onClick = {
+//                    val uploadWorkRequest: WorkRequest =
+//                        OneTimeWorkRequestBuilder<UploadWorker>()
+//                            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+//                            .build()
+//
+//                    WorkManager
+//                        .getInstance()
+//                        .enqueue(uploadWorkRequest)
+//
+//                }) {
+//                    Text(text = "setExpedited")
+//                }
+//
+//                Button(onClick = {
+//                    todoViewModel.doAForegroundWorker()
+//                }) {
+//                    Text(text = "Work manager + Forground Services")
+//                }
+//
+//                Button(onClick = {
+//                    todoViewModel.doAWorkChain()
+//                }) {
+//                    Text(text = "Work chain")
+//                }
+//
+//                Text(text = "Work chain State")
+//                Text(
+//                    text = "${
+//                        workChainState?.value?.map {
+//                            it.tags.find { tag -> tag.contains("worker") } + "--" + it.state.toString()// + "--" + it.outputData.getString(WORK_CHAIN_DATA_KEY)
+//                        }
+//                    }"
+//                )
+//                Text(text = "\nWork1 result:")
+//                Text(
+//                    text = "${
+//                        workChainState?.value?.find {
+//                            it.tags.find { tag -> tag.contains("worker") } == WORKER1_TAG
+//                        }?.outputData?.getString(WORK_CHAIN_DATA_KEY)
+//                    }"
+//                )
+//
+//                Text(text = "\nWork2 result:")
+//                Text(
+//                    text = "${
+//                        workChainState?.value?.find {
+//                            it.tags.find { tag -> tag.contains("worker") } == WORKER2_TAG
+//                        }?.outputData?.getString(WORK_CHAIN_DATA_KEY)
+//                    }"
+//                )
+//
+//                Text(text = "\nWork3 result:")
+//                Text(
+//                    text = "${
+//                        workChainState?.value?.find {
+//                            it.tags.find { tag -> tag.contains("worker") } == WORKER3_TAG
+//                        }?.outputData?.getString(WORK_CHAIN_DATA_KEY)
+//                    }"
+//                )
+//
+//                Button(onClick = {
+//                    todoViewModel.cancelWorkerByTag(WORKER2_TAG)
+//                }) {
+//                    Text(text = "Cancel worker1")
+//                }
+//
+//                Button(onClick = {
+//                    todoViewModel.makeBackgroundThreadWorkRequest(33)
+//                }) {
+//                    Text(text = "makeBackgroundThreadWorkRequest")
+//                }
+//                Text(
+//                    text = "${
+//                        makeBackgroundThreadWorkRequestDataState.value
+//                    }"
+//                )
+//
+//                Button(onClick = {
+//                    todoViewModel.makeCoroutinesWorkRequest(44)
+//                }) {
+//                    Text(text = "makeCoroutinesWorkRequest")
+//                }
+//                Text(
+//                    text = "${
+//                        makeCoroutinesWorkRequestDataState.value
+//                    }"
+//                )
+//
+//                Button(onClick = {
+//                    todoAndroidViewModel.startService();
+//                }) {
+//                    Text(text = "ForegroundService")
+//                }
+//            }
         }
     }
 }

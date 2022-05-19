@@ -92,13 +92,13 @@ object TodoModule {
         mainThreadHandler: Handler,
     ): TodosRepository {
         return TodosRepository(
-            todosRemoteDataSource = todosRemoteDataSource,
+//            todosRemoteDataSource = todosRemoteDataSource,
             todosLocalDataSource = todosLocalDataSource,
-            todoPagingSource = todoPagingSource,
+//            todoPagingSource = todoPagingSource,
 //            dataStore,
 //            userPreferencesProtoStore = userPreferencesStore,
-            executor = executor,
-            resultHandler = mainThreadHandler,
+//            executor = executor,
+//            resultHandler = mainThreadHandler,
         )
     }
 

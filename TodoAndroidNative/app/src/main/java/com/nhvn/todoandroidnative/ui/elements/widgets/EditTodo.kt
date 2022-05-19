@@ -15,14 +15,15 @@ import com.nhvn.todoandroidnative.data.datasources.models.Todo
 fun EditTodo(
     modifier: Modifier = Modifier,
     onSave: (Todo) -> Unit = {},
-    onCancel: () -> Unit = {}
+    onCancel: () -> Unit = {},
+    todo: Todo,
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
     ) {
-        val (title, setTitle) = remember { mutableStateOf("") }
-        val (description, setDescription) = remember { mutableStateOf("") }
+        val (title, setTitle) = remember { mutableStateOf(todo.title) }
+        val (description, setDescription) = remember { mutableStateOf(todo.description) }
 
         TextField(
             value = title,
@@ -51,7 +52,7 @@ fun EditTodo(
                 Text(text = "Cancel")
             }
             Button(onClick = {
-                onSave(Todo(title = title, description = description))
+                onSave(todo.copy(title = title, description = description))
                 setTitle("")
                 setDescription("")
             }) {
@@ -64,5 +65,5 @@ fun EditTodo(
 @Preview
 @Composable
 fun PreviewEditTodo() {
-    EditTodo()
+    EditTodo(todo = Todo())
 }
