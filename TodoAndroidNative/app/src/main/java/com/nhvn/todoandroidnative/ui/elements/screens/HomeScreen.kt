@@ -99,16 +99,24 @@ fun HomeScreen(
                                 navController.navigate(Routes.editTodoScreen(it))
                             }
                         )
-                        1 -> UserInfoList(
-                            modifier = Modifier.padding(16.dp),
-                            todoViewModel = todoViewModel,
-                        )
-                        2 -> ListTodo(
-                            todos = todos
-                                .filter { it.state == TodoWorkingStateEnum.done },
+                        1 -> ListTodo(
+                            todos = todos,
                             modifier = Modifier.padding(16.dp),
                             onNewTodoWorkingStateSelected = { todo, newState ->
                                 // todoViewModel.changeTodoWorkingState(todo, newState)
+                            },
+                            onItemClick = {
+                                navController.navigate(Routes.editTodoScreen(it))
+                            }
+                        )
+                        2 -> ListTodo(
+                            todos = todos,
+                            modifier = Modifier.padding(16.dp),
+                            onNewTodoWorkingStateSelected = { todo, newState ->
+                                // todoViewModel.changeTodoWorkingState(todo, newState)
+                            },
+                            onItemClick = {
+                                navController.navigate(Routes.editTodoScreen(it))
                             }
                         )
                     }
