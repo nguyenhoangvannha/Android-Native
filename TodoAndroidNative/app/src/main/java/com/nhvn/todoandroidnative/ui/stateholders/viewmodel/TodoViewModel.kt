@@ -20,6 +20,7 @@ import com.nhvn.todoandroidnative.data.repositories.TodosRepository
 import com.nhvn.todoandroidnative.data.repositories.WORK_CHAIN_TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,7 +28,7 @@ import javax.inject.Inject
 class TodoViewModel @Inject constructor(private val todoRepository: TodosRepository) : ViewModel() {
 
 
-    val allWords: LiveData<List<Todo>> = todoRepository.allTodos.asLiveData()
+    val todos: LiveData<List<Todo>> = todoRepository.allTodos.asLiveData()
 
     /**
      * Launching a new coroutine to insert the data in a non-blocking way
@@ -43,21 +44,21 @@ class TodoViewModel @Inject constructor(private val todoRepository: TodosReposit
         return todoRepository.getTodosByPage().cachedIn(viewModelScope)
     }
 
-    fun darkMode(): Flow<Boolean> {
-        return todoRepository.darkMode()
-    }
-
-    fun setDarkMode(darkMode: Boolean) = viewModelScope.launch {
-        todoRepository.setDarkMode(darkMode = darkMode)
-    }
-
-    fun userPreferences(): Flow<UserPreferences> {
-        return todoRepository.userPreferencesFlow()
-    }
-
-    fun setDarkModeProtoStore(darkMode: Boolean) = viewModelScope.launch {
-        todoRepository.setDarkModeProtoStore(darkMode = darkMode)
-    }
+//    fun darkMode(): Flow<Boolean> {
+//        return todoRepository.darkMode()
+//    }
+//
+//    fun setDarkMode(darkMode: Boolean) = viewModelScope.launch {
+//        todoRepository.setDarkMode(darkMode = darkMode)
+//    }
+//
+//    fun userPreferences(): Flow<UserPreferences> {
+//        return todoRepository.userPreferencesFlow()
+//    }
+//
+//    fun setDarkModeProtoStore(darkMode: Boolean) = viewModelScope.launch {
+//        todoRepository.setDarkModeProtoStore(darkMode = darkMode)
+//    }
 
     var workChainInfoLiveData: LiveData<List<WorkInfo>> =
         WorkManager.getInstance().getWorkInfosByTagLiveData(WORK_CHAIN_TAG)
@@ -107,15 +108,15 @@ class TodoViewModel @Inject constructor(private val todoRepository: TodosReposit
     }
 }
 
-class TodoViewModelFactory(private val repository: TodosRepository) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(TodoViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return TodoViewModel(repository) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
-}
+//class TodoViewModelFactory(private val repository: TodosRepository) : ViewModelProvider.Factory {
+//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+//        if (modelClass.isAssignableFrom(TodoViewModel::class.java)) {
+//            @Suppress("UNCHECKED_CAST")
+//            return TodoViewModel(repository) as T
+//        }
+//        throw IllegalArgumentException("Unknown ViewModel class")
+//    }
+//}
 
 class TodoAndroidViewModel(application: Application) : AndroidViewModel(application) {
     val serviceIntent = Intent(getApplication(), ForegroundService::class.java)

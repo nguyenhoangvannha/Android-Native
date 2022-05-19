@@ -17,7 +17,8 @@ import io.github.serpro69.kfaker.faker
 fun ListTodo(
     todos: List<Todo>,
     modifier: Modifier = Modifier,
-    onNewTodoWorkingStateSelected: (Todo, TodoWorkingStateEnum) -> Unit = { _, _ -> }
+    onNewTodoWorkingStateSelected: (Todo, TodoWorkingStateEnum) -> Unit = { _, _ -> },
+    onItemClick: (todoId: String) -> Unit = { _ -> }
 ) {
     LazyColumn(
         modifier = modifier,
@@ -28,6 +29,7 @@ fun ListTodo(
                 todo = todo,
                 modifier = Modifier.fillMaxWidth(),
                 onNewTodoWorkingStateSelected = onNewTodoWorkingStateSelected,
+                onClick = onItemClick
             )
             Divider()
         }

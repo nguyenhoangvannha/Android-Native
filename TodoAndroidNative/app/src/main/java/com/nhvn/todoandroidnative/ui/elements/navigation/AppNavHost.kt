@@ -32,8 +32,14 @@ fun AppNavHost(
                 navController = navController,
             )
         }
-        composable(Routes.editTodoScreen) {
-            EditTodoScreen(navController)
+        composable(
+            Routes.editTodoScreen("{todoId}")
+        ) { backStackEntry ->
+            EditTodoScreen(
+                navController,
+                todoId = backStackEntry.arguments?.getString("todoId") ?: "",
+                viewModel = todoViewModel,
+            )
         }
         composable(Routes.featuresScreen) {
             DemoScreen(todoViewModel, todoAndroidViewModel = todoAndroidViewModel)

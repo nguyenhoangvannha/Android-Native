@@ -11,7 +11,7 @@ import java.util.*
 @Entity(tableName = "todo_table")
 data class Todo(
     @PrimaryKey @ColumnInfo(name = "id") val id: String = UUID.randomUUID().toString(),
-    @ColumnInfo(name = "title") val title: String,
+    @ColumnInfo(name = "title") val title: String = "",
     @ColumnInfo(name = "description") val description: String = "",
     @ColumnInfo(name = "state") val state: TodoWorkingStateEnum = TodoWorkingStateEnum.created,
     @ColumnInfo(name = "created_at") val createdAt: Date = Date()
