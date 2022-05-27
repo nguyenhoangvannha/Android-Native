@@ -102,10 +102,12 @@ object TodoModule {
         )
     }
 
-//    @Binds
-//    abstract fun bindTodosRepository(
-//        todosRepository: TodosRepository
-//    ): AbstractTodosRepository
+    @Provides
+    fun bindTodosRepository(
+        todosRepository: TodosRepository
+    ): AbstractTodosRepository {
+        return todosRepository;
+    }
 }
 
 @Module
