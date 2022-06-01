@@ -19,10 +19,13 @@ class TodoAppTest {
     fun myTest() {
         composeTestRule.onNodeWithTag("AddTodoFloatingActionButton").performClick();
         composeTestRule.onNodeWithTag("EditTodoScreen").assertIsDisplayed();
+        val editTodoTitle = "Todo App ${Date()} EditTodoTitle";
         composeTestRule.onNodeWithTag("EditTodoTitle")
-            .performTextInput("Todo App ${Date()} EditTodoTitle");
+            .performTextInput(editTodoTitle);
         composeTestRule.onNodeWithTag("EditTodoDescription")
             .performTextInput("Todo App EditTodoDescription");
         composeTestRule.onNodeWithTag("EditTodoSaveButton").performClick();
+
+//        composeTestRule.onNodeWithTag("TodoCardTitle $editTodoTitle").assertIsDisplayed();
     }
 }
