@@ -2,7 +2,7 @@
 buildscript {
     ext.kotlin_version = '1.5.31'
     ext {
-        compose_version = '1.0.1'
+        compose_version = '1.1.1'
     }
     repositories {
         google()
@@ -23,4 +23,9 @@ task clean(type: Delete) {
 
 ext {
     roomVersion = '2.3.0'
+    jUnitVersion = '4.13.2'
+    androidXTestVersion = '1.4.0'
+    mockitoVersion = '4.5.1'
+    mockitoKotlinVersion = '4.0.0'
+    mockkVersion = '1.4.1'
 }

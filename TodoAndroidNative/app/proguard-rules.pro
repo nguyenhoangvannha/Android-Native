@@ -19,3 +19,15 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-dontwarn com.google.android.material.**
+-keep class com.google.android.material.** { *; }
+
+-dontwarn androidx.**
+-keep class androidx.** { *; }
+-keep interface androidx.** { *; }
+
+-dontwarn android.support.v4.**
+-keep class android.support.v4.** { *; }
+
+-dontwarn android.support.v7.**
+-keep class android.support.v7.** { *; }

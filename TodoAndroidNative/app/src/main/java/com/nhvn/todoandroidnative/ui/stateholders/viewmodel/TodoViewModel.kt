@@ -8,6 +8,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.nhvn.todoandroidnative.data.ForegroundService
 import com.nhvn.todoandroidnative.data.datasources.models.Todo
+import com.nhvn.todoandroidnative.data.repositories.AbstractTodosRepository
 import com.nhvn.todoandroidnative.data.repositories.TodosRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -15,7 +16,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TodoViewModel @Inject constructor(private val todoRepository: TodosRepository) : ViewModel() {
+class TodoViewModel @Inject constructor(private val todoRepository: AbstractTodosRepository) :
+    ViewModel() {
 
 
     val todos: LiveData<List<Todo>> = todoRepository.allTodos.asLiveData()
@@ -25,6 +27,10 @@ class TodoViewModel @Inject constructor(private val todoRepository: TodosReposit
      */
     fun insert(todo: Todo) = viewModelScope.launch {
         todoRepository.insert(todo)
+    }
+
+    fun add(value: String): String {
+        return value;
     }
 
 //    val todoPagingData: Flow<PagingData<Todo>> =

@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import com.nhvn.todoandroidnative.data.datasources.models.Todo
 
@@ -28,7 +29,8 @@ fun EditTodo(
         TextField(
             value = title,
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .testTag("EditTodoTitle"),
             onValueChange = {
                 setTitle(it)
             },
@@ -37,7 +39,8 @@ fun EditTodo(
         TextField(
             value = description,
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .testTag("EditTodoDescription"),
             onValueChange = {
                 setDescription(it)
             },
@@ -55,7 +58,7 @@ fun EditTodo(
                 onSave(todo.copy(title = title, description = description))
                 setTitle("")
                 setDescription("")
-            }) {
+            }, modifier = Modifier.testTag("EditTodoSaveButton")) {
                 Text(text = "Save")
             }
         }

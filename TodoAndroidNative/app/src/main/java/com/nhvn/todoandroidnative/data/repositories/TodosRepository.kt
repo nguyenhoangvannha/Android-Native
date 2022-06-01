@@ -14,6 +14,7 @@ import com.nhvn.todoandroidnative.data.datasources.TodosLocalDataSource
 import com.nhvn.todoandroidnative.data.datasources.TodosRemoteDataSource
 import com.nhvn.todoandroidnative.data.datasources.models.Todo
 import com.nhvn.todoandroidnative.data.work.*
+import dagger.Provides
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
@@ -26,6 +27,10 @@ import javax.inject.Inject
 abstract class AbstractTodosRepository() {
     abstract val allTodos: Flow<List<Todo>>
     abstract suspend fun insert(todo: Todo): Unit
+    open fun add(value: String): String {
+        return value;
+    }
+
 //    abstract suspend fun getTodos(): List<Todo>
 //    abstract suspend fun getTodosByPage(limit: Int = 7, offset: Int): List<Todo>
 //    abstract fun getTodosByPage(): Flow<PagingData<Todo>>

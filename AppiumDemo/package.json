@@ -1,0 +1,17 @@
+{
+  "name": "AppiumDemo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "appium-espresso-driver": "^2.3.0",
+    "webdriverio": "^7.19.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
