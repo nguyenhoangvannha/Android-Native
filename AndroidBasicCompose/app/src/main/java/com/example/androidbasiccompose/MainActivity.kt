@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.androidbasiccompose.birthday.BirthDayCard
+import com.example.androidbasiccompose.compose.practice.ComposeQuadrant
 import com.example.androidbasiccompose.ui.theme.AndroidBasicComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,7 +21,20 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    BirthDayCard()
+                    ComposeQuadrant(
+                        titleList = listOf(
+                            "Text composable",
+                            "Image composable",
+                            "Row composable",
+                            "Column composable"
+                        ),
+                        desList = listOf(
+                            "Displays text and follows the recommended Material Design guidelines.",
+                            "Creates a composable that lays out and draws a given Painter class object.",
+                            "A layout composable that places its children in a horizontal sequence.",
+                            "A layout composable that places its children in a vertical sequence.",
+                        )
+                    )
                 }
             }
         }
