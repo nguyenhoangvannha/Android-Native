@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Android Basic Compose</string>
+    <string name="happy_birthday_nha_nguyen">Happy birthday Nha Nguyen</string>
+    <string name="signature_text">From Buddha</string>
 </resources>
