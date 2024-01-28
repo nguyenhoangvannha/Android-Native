@@ -67,7 +67,7 @@ fun GreetingImage(message: String, from: String, modifier: Modifier = Modifier) 
 }
 
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun BirthdayCardPreview() {
     AndroidBasicComposeTheme {
