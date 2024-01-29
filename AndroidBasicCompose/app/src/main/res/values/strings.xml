@@ -16,4 +16,9 @@
     <string name="a_layout_composable_that_places_its_children_in_a_horizontal_sequence">A layout composable that places its children in a horizontal sequence.</string>
     <string name="a_layout_composable_that_places_its_children_in_a_vertical_sequence">A layout composable that places its children in a vertical sequence.</string>
     <string name="roll">Roll</string>
+    <string name="calculate_tip">Calculate Tip</string>
+    <string name="bill_amount">Bill Amount</string>
+    <string name="tip_amount">Tip Amount: %s</string>
+    <string name="how_was_the_service">Tip Percentage</string>
+    <string name="round_up_tip">Round up tip?</string>
 </resources>

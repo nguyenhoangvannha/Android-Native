@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import com.example.androidbasiccompose.birthday.BirthDayCard
 import com.example.androidbasiccompose.compose.diceroller.DiceRollerApp
 import com.example.androidbasiccompose.compose.practice.ComposeQuadrant
+import com.example.androidbasiccompose.compose.state.tipcalculator.TipTimeLayout
 import com.example.androidbasiccompose.ui.theme.AndroidBasicComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -17,7 +18,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AndroidBasicComposeTheme {
-                DiceRollerApp()
+                TipTimeLayout()
             }
         }
     }
