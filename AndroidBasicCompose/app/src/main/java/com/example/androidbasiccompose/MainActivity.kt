@@ -3,6 +3,7 @@ package com.example.androidbasiccompose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import com.example.androidbasiccompose.compose.girdtopic.GridTopic
 import com.example.androidbasiccompose.compose.state.artspace.ArtSpaceApp
 import com.example.androidbasiccompose.ui.theme.AndroidBasicComposeTheme
 
@@ -11,7 +12,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AndroidBasicComposeTheme {
-                ArtSpaceApp()
+                GridTopic()
             }
         }
     }
